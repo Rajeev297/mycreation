@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — My Creation Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --burg:      #9c2645; --burg-dk: #6d1730; --burg-lt: #c23458;
+      --gold:      #c9973a; --gold-lt: #d4a843; --gold-sh: #e8c96d;
+      --cream:     #fdf5f7; --warm:    #f7e8ed; --border:  #eedde4; --border-dk: #d9bec8;
+      --dark:      #2a0d17; --text:    #3d1422; --muted:   #8a5265;
+      --white:     #ffffff; --shadow:  rgba(120,30,60,0.13);
+      --green:     #25d366; --red:     #e53935; --blue:    #1976d2;
+      --sidebar-w: 240px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { font-family: 'Jost', sans-serif; background: #f4edf0; color: var(--text); display: flex; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w); flex-shrink: 0;
+      background: var(--dark);
+      display: flex; flex-direction: column;
+      position: fixed; top: 0; left: 0; bottom: 0;
+      z-index: 100; overflow-y: auto;
+    }
+    .sidebar-brand {
+      padding: 1.4rem 1.2rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .sidebar-brand img { height: 52px; mix-blend-mode: screen; margin-bottom: 0.3rem; }
+    .sidebar-brand span { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.35); display: block; }
+    .sidebar-nav { flex: 1; padding: 1rem 0; }
+    .nav-group-label { font-size: 0.55rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-sh); padding: 0.8rem 1.2rem 0.4rem; }
+    .nav-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.7rem 1.2rem; cursor: pointer;
+      font-size: 0.8rem; color: rgba(255,255,255,0.5);
+      transition: background 0.2s, color 0.2s;
+      border-left: 2px solid transparent;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.8); }
+    .nav-item.active { background: rgba(156,38,69,0.25); color: white; border-left-color: var(--burg-lt); }
+    .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .sidebar-footer {
+      padding: 1rem 1.2rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      font-size: 0.7rem; color: rgba(255,255,255,0.3);
+    }
+    .logout-btn {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.75rem; color: rgba(255,255,255,0.4);
+      cursor: pointer; padding: 0.5rem 0; transition: color 0.2s;
+    }
+    .logout-btn:hover { color: var(--burg-lt); }
+    .logout-btn svg { width: 15px; height: 15px; }
+
+    /* ── MAIN ── */
+    .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+    .topbar {
+      background: var(--white); padding: 0.9rem 2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .topbar-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 300; color: var(--dark); }
+    .topbar-right { display: flex; align-items: center; gap: 1rem; }
+    .topbar-badge { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; background: var(--warm); color: var(--burg); border: 1px solid var(--border-dk); padding: 0.3rem 0.8rem; }
+    .save-all-btn {
+      background: var(--burg); color: white;
+      font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.55rem 1.4rem; border: none; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .save-all-btn:hover { background: var(--burg-dk); }
+    .preview-btn {
+      background: transparent; color: var(--burg);
+      font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.52rem 1.2rem; border: 1.5px solid var(--burg); cursor: pointer;
+      transition: all 0.2s;
+    }
+    .preview-btn:hover { background: var(--burg); color: white; }
+
+    .content { padding: 2rem; flex: 1; }
+
+    /* ── PANELS (pages) ── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ── STAT CARDS ── */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; margin-bottom: 2rem; }
+    .stat-card {
+      background: var(--white); border: 1px solid var(--border);
+      padding: 1.4rem 1.6rem;
+      border-top: 3px solid var(--burg);
+    }
+    .stat-card.gold { border-top-color: var(--gold); }
+    .stat-card.green { border-top-color: var(--green); }
+    .stat-card.blue  { border-top-color: var(--blue); }
+    .stat-num-big { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 400; color: var(--burg); line-height: 1; }
+    .stat-card.gold  .stat-num-big { color: var(--gold); }
+    .stat-card.green .stat-num-big { color: var(--green); }
+    .stat-card.blue  .stat-num-big { color: var(--blue); }
+    .stat-card-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 0.4rem; }
+    .stat-card-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.25rem; }
+
+    /* ── SECTION CARD ── */
+    .section-card {
+      background: var(--white); border: 1px solid var(--border);
+      margin-bottom: 1.5rem; overflow: hidden;
+    }
+    .section-card-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);
+      background: var(--warm);
+    }
+    .section-card-head h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; color: var(--dark); }
+    .section-card-head span { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; }
+    .section-card-body { padding: 1.5rem; }
+
+    /* ── FORM ELEMENTS ── */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.2rem; }
+    .form-row.single { grid-template-columns: 1fr; }
+    .form-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+    .form-group input, .form-group textarea, .form-group select {
+      border: 1px solid var(--border-dk); padding: 0.6rem 0.9rem;
+      font-family: 'Jost', sans-serif; font-size: 0.83rem; color: var(--text);
+      background: var(--cream); outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--burg); }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .hint { font-size: 0.65rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* ── IMAGE UPLOAD ── */
+    .img-upload-box {
+      border: 2px dashed var(--border-dk); padding: 2rem;
+      text-align: center; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .img-upload-box:hover { border-color: var(--burg); background: var(--warm); }
+    .img-upload-box input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .img-upload-box svg { width: 36px; height: 36px; stroke: var(--muted); fill: none; margin-bottom: 0.6rem; }
+    .img-upload-box p { font-size: 0.78rem; color: var(--muted); }
+    .img-upload-box span { font-size: 0.65rem; color: var(--burg); }
+    .img-preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.8rem; margin-top: 1rem; }
+    .img-preview {
+      aspect-ratio: 1; background: var(--warm); border: 1px solid var(--border-dk);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: var(--muted);
+    }
+    .img-preview img { width: 100%; height: 100%; object-fit: cover; }
+    .img-preview .del-btn {
+      position: absolute; top: 4px; right: 4px;
+      background: rgba(229,57,53,0.85); color: white;
+      border: none; width: 20px; height: 20px;
+      border-radius: 50%; font-size: 0.7rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── PRODUCT LIST ── */
+    .product-list { display: flex; flex-direction: column; gap: 0.8rem; }
+    .product-row {
+      display: grid; grid-template-columns: 60px 1fr 1fr 120px 120px 90px;
+      gap: 1rem; align-items: center;
+      padding: 0.8rem 1rem; background: var(--cream);
+      border: 1px solid var(--border); border-left: 3px solid var(--burg);
+    }
+    .product-row-img { width: 60px; height: 60px; background: var(--warm); border: 1px solid var(--border-dk); display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: var(--muted); overflow: hidden; position: relative; cursor: pointer; }
+    .product-row-img img { width: 100%; height: 100%; object-fit: cover; }
+    .product-row-img input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .product-row-img:hover::after { content: '📷'; position: absolute; inset: 0; background: rgba(156,38,69,0.5); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+    .prod-input { border: 1px solid var(--border-dk); padding: 0.45rem 0.6rem; font-family: 'Jost', sans-serif; font-size: 0.8rem; width: 100%; background: var(--white); outline: none; }
+    .prod-input:focus { border-color: var(--burg); }
+    .prod-badge-select { border: 1px solid var(--border-dk); padding: 0.45rem 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.75rem; width: 100%; background: var(--white); outline: none; }
+    .row-actions { display: flex; gap: 0.4rem; }
+    .icon-btn { width: 30px; height: 30px; border: 1px solid var(--border-dk); background: var(--white); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+    .icon-btn:hover { background: var(--warm); border-color: var(--burg); }
+    .icon-btn.danger:hover { background: #ffebee; border-color: var(--red); }
+    .icon-btn svg { width: 13px; height: 13px; }
+    .add-row-btn {
+      display: flex; align-items: center; gap: 0.5rem;
+      background: transparent; color: var(--burg);
+      border: 1.5px dashed var(--burg); padding: 0.6rem 1.2rem;
+      font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; margin-top: 0.8rem; transition: background 0.2s;
+      width: 100%;  justify-content: center;
+    }
+    .add-row-btn:hover { background: var(--warm); }
+
+    /* ── REVIEW LIST ── */
+    .review-list { display: flex; flex-direction: column; gap: 0.8rem; }
+    .review-row {
+      display: grid; grid-template-columns: 1fr 2fr 120px 100px;
+      gap: 1rem; align-items: start;
+      padding: 1rem; background: var(--cream);
+      border: 1px solid var(--border); border-left: 3px solid var(--gold);
+    }
+    .stars-select { border: 1px solid var(--border-dk); padding: 0.45rem 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.75rem; width: 100%; background: var(--white); outline: none; }
+
+    /* ── SETTINGS ── */
+    .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid var(--border); }
+    .toggle-label { font-size: 0.82rem; color: var(--text); }
+    .toggle-sub { font-size: 0.68rem; color: var(--muted); margin-top: 0.15rem; }
+    .toggle { position: relative; width: 42px; height: 22px; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute; inset: 0; border-radius: 11px;
+      background: var(--border-dk); cursor: pointer; transition: background 0.3s;
+    }
+    .toggle-slider::before {
+      content: ''; position: absolute;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: white; top: 3px; left: 3px;
+      transition: transform 0.3s;
+    }
+    .toggle input:checked + .toggle-slider { background: var(--burg); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+    /* ── ORDERS ── */
+    .orders-table { width: 100%; border-collapse: collapse; }
+    .orders-table th { text-align: left; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); padding: 0.7rem 1rem; background: var(--warm); border-bottom: 1px solid var(--border-dk); }
+    .orders-table td { padding: 0.85rem 1rem; font-size: 0.8rem; border-bottom: 1px solid var(--border); color: var(--text); }
+    .orders-table tr:hover td { background: var(--warm); }
+    .status-badge { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.25rem 0.7rem; }
+    .status-badge.new     { background: #e3f2fd; color: var(--blue); }
+    .status-badge.prog    { background: #fff8e1; color: #f57f17; }
+    .status-badge.done    { background: #e8f5e9; color: #2e7d32; }
+    .status-badge.shipped { background: #f3e5f5; color: #6a1b9a; }
+
+    /* ── TOAST ── */
+    .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--burg-dk); color: white; padding: 0.8rem 1.5rem; font-size: 0.78rem; letter-spacing: 0.06em; transform: translateY(100px); opacity: 0; transition: all 0.4s; z-index: 9999; pointer-events: none; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ── LOGIN SCREEN ── */
+    .login-screen {
+      position: fixed; inset: 0; background: var(--dark);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
+    }
+    .login-box {
+      background: var(--white); padding: 3rem 2.5rem; width: 360px;
+      text-align: center; box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+    }
+    .login-box img { height: 70px; mix-blend-mode: multiply; margin: 0 auto 1.5rem; }
+    .login-box h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300; color: var(--dark); margin-bottom: 0.3rem; }
+    .login-box p { font-size: 0.75rem; color: var(--muted); margin-bottom: 2rem; }
+    .login-box input { width: 100%; border: 1px solid var(--border-dk); padding: 0.75rem 1rem; font-family: 'Jost', sans-serif; font-size: 0.85rem; margin-bottom: 1rem; outline: none; background: var(--cream); transition: border-color 0.2s; }
+    .login-box input:focus { border-color: var(--burg); }
+    .login-btn { width: 100%; background: var(--burg); color: white; border: none; padding: 0.85rem; font-family: 'Jost', sans-serif; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+    .login-btn:hover { background: var(--burg-dk); }
+    .login-error { font-size: 0.72rem; color: var(--red); margin-top: 0.5rem; display: none; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .product-row { grid-template-columns: 50px 1fr 1fr; }
+      .settings-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══ -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <img src="logo.png" alt="My Creation" />
+    <h2>Admin Login</h2>
+    <p>My Creation — Dashboard Access</p>
+    <input type="text" id="loginUser" placeholder="Username" />
+    <input type="password" id="loginPass" placeholder="Password" />
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+    <div class="login-error" id="loginErr">Incorrect username or password.</div>
+    <p style="font-size:0.62rem;color:var(--muted);margin-top:1.2rem;">Default: admin / mycreation123</p>
+  </div>
+</div>
+
+<!-- ══ SIDEBAR ══ -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <img src="logo.png" alt="My Creation" />
+    <span>Admin Dashboard</span>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group-label">Overview</div>
+    <div class="nav-item active" onclick="showPanel('dashboard',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </div>
+
+    <div class="nav-group-label">Website Content</div>
+    <div class="nav-item" onclick="showPanel('hero',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+      Hero Section
+    </div>
+    <div class="nav-item" onclick="showPanel('products',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      Products
+    </div>
+    <div class="nav-item" onclick="showPanel('story',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Artisan Story
+    </div>
+    <div class="nav-item" onclick="showPanel('reviews',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Reviews
+    </div>
+    <div class="nav-item" onclick="showPanel('collections',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+      Collections
+    </div>
+
+    <div class="nav-group-label">Business</div>
+    <div class="nav-item" onclick="showPanel('orders',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      Orders
+    </div>
+    <div class="nav-item" onclick="showPanel('contact',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Contact &amp; Info
+    </div>
+    <div class="nav-item" onclick="showPanel('settings',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Settings
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="logout-btn" onclick="doLogout()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sign Out
+    </div>
+    <div style="margin-top:0.5rem;">My Creation Admin v1.0</div>
+  </div>
+</div>
+
+<!-- ══ MAIN ══ -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="panelTitle">Dashboard</div>
+    <div class="topbar-right">
+      <span class="topbar-badge">🔒 Secure Session</span>
+      <button class="preview-btn" onclick="window.open('index.html','_blank')">↗ Preview Site</button>
+      <button class="save-all-btn" onclick="saveAll()">✦ Save Changes</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ════ DASHBOARD ════ -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-num-big" id="stat-products">4</div>
+          <div class="stat-card-label">Products Listed</div>
+          <div class="stat-card-sub">Ready-made items</div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-num-big gold">3</div>
+          <div class="stat-card-label">Custom Requests</div>
+          <div class="stat-card-sub">Pending review</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-num-big" style="color:var(--green)">3</div>
+          <div class="stat-card-label">Reviews Live</div>
+          <div class="stat-card-sub">On website</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-num-big" style="color:var(--blue)">5</div>
+          <div class="stat-card-label">Collections</div>
+          <div class="stat-card-sub">Assamese to Boho</div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-card-head"><h3>Recent Custom Orders</h3><span>Latest requests from website / WhatsApp</span></div>
+        <div class="section-card-body">
+          <table class="orders-table">
+            <thead><tr><th>#</th><th>Customer</th><th>Occasion</th><th>City</th><th>Event Month</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="ordersBody">
+              <tr><td>001</td><td>Priya Sharma</td><td>Wedding Reception</td><td>Delhi</td><td>March 2025</td><td><span class="status-badge new">New</span></td><td><button class="icon-btn" title="WhatsApp" onclick="waContact('Priya Sharma')"><svg viewBox="0 0 24 24" fill="var(--green)"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.531 5.856L.057 23.25a.75.75 0 0 0 .921.919l5.487-1.472A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.498-5.24-1.37l-.375-.214-3.888 1.042 1.059-3.766-.232-.39A9.953 9.953 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></button></td></tr>
+              <tr><td>002</td><td>Ankita Das</td><td>Festival</td><td>Bhubaneswar</td><td>April 2025</td><td><span class="status-badge prog">In Progress</span></td><td><button class="icon-btn" onclick="waContact('Ankita Das')"><svg viewBox="0 0 24 24" fill="var(--green)"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.531 5.856L.057 23.25a.75.75 0 0 0 .921.919l5.487-1.472A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.498-5.24-1.37l-.375-.214-3.888 1.042 1.059-3.766-.232-.39A9.953 9.953 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></button></td></tr>
+              <tr><td>003</td><td>Meenakshi Nair</td><td>Engagement</td><td>Kochi</td><td>May 2025</td><td><span class="status-badge shipped">Shipped</span></td><td><button class="icon-btn" onclick="waContact('Meenakshi Nair')"><svg viewBox="0 0 24 24" fill="var(--green)"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.531 5.856L.057 23.25a.75.75 0 0 0 .921.919l5.487-1.472A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.498-5.24-1.37l-.375-.214-3.888 1.042 1.059-3.766-.232-.39A9.953 9.953 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-card-head"><h3>Quick Tips</h3><span>How this dashboard works</span></div>
+        <div class="section-card-body">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem;">
+            <div style="padding:1rem;background:var(--warm);border-left:3px solid var(--burg);">
+              <div style="font-size:0.7rem;font-weight:600;color:var(--burg);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Edit &amp; Save</div>
+              <div style="font-size:0.78rem;color:var(--muted);line-height:1.6;">Make changes in any section. Click <strong>Save Changes</strong> at the top. Data is stored in browser memory and exported as a data file.</div>
+            </div>
+            <div style="padding:1rem;background:var(--warm);border-left:3px solid var(--gold);">
+              <div style="font-size:0.7rem;font-weight:600;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Images</div>
+              <div style="font-size:0.78rem;color:var(--muted);line-height:1.6;">Upload product photos, hero image, and your portrait from each section. Images are converted and stored locally.</div>
+            </div>
+            <div style="padding:1rem;background:var(--warm);border-left:3px solid var(--blue);">
+              <div style="font-size:0.7rem;font-weight:600;color:var(--blue);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">Sync to Website</div>
+              <div style="font-size:0.78rem;color:var(--muted);line-height:1.6;">After saving, click <strong>Export Data</strong> in Settings → copy the JSON → paste into your website's data file. See the How-To-Sync guide.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ HERO ════ -->
+    <div class="panel" id="panel-hero">
+      <div class="section-card">
+        <div class="section-card-head"><h3>Hero Section</h3><span>Main banner — first thing visitors see</span></div>
+        <div class="section-card-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Main Headline (Line 1)</label>
+              <input type="text" id="heroLine1" value="Jewellery Designed" />
+            </div>
+            <div class="form-group">
+              <label>Main Headline (Line 2 — shown in burgundy italic)</label>
+              <input type="text" id="heroLine2" value="for Your Occasion" />
+            </div>
+          </div>
+          <div class="form-row single">
+            <div class="form-group">
+              <label>Subtext / Description</label>
+              <textarea id="heroSub">Each piece is handcrafted with love, tradition, and an artistic soul — made to match your outfit, your culture, and your celebration.</textarea>
+            </div>
+          </div>
+          <div class="form-row triple">
+            <div class="form-group"><label>Stat 1 Number</label><input type="text" id="stat1" value="500+" /></div>
+            <div class="form-group"><label>Stat 2 Number</label><input type="text" id="stat2" value="8+" /></div>
+            <div class="form-group"><label>Stat 3 Number</label><input type="text" id="stat3" value="100%" /></div>
+          </div>
+          <div class="form-row triple">
+            <div class="form-group"><label>Stat 1 Label</label><input type="text" id="stat1l" value="Happy Clients" /></div>
+            <div class="form-group"><label>Stat 2 Label</label><input type="text" id="stat2l" value="Years of Craft" /></div>
+            <div class="form-group"><label>Stat 3 Label</label><input type="text" id="stat3l" value="Handmade" /></div>
+          </div>
+        </div>
+      </div>
+      <div class="section-card">
+        <div class="section-card-head"><h3>Hero Image</h3><span>Large right-side banner image</span></div>
+        <div class="section-card-body">
+          <div class="img-upload-box" onclick="document.getElementById('heroImgInput').click()">
+            <input type="file" id="heroImgInput" accept="image/*" onchange="previewSingle(this,'heroImgPreview','heroImgWrap')" style="display:none" />
+            <svg viewBox="0 0 24 24" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <p>Click to upload Hero Image</p>
+            <span>Recommended: 800×1000px portrait · JPG or PNG</span>
+          </div>
+          <div id="heroImgWrap" style="margin-top:1rem;display:none;">
+            <img id="heroImgPreview" style="max-height:200px;border:1px solid var(--border-dk);" />
+            <p class="hint" style="margin-top:0.4rem;">✓ Image will appear on the right side of the hero section</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ PRODUCTS ════ -->
+    <div class="panel" id="panel-products">
+      <div class="section-card">
+        <div class="section-card-head"><h3>Ready-Made Products</h3><span>Manage your product listings</span></div>
+        <div class="section-card-body">
+          <div style="display:grid;grid-template-columns:60px 1fr 1fr 120px 120px 90px;gap:0.5rem;padding:0 1rem 0.5rem;margin-bottom:0.4rem;">
+            <span style="font-size:0.58rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);">Photo</span>
+            <span style="font-size:0.58rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);">Product Name</span>
+            <span style="font-size:0.58rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);">Category</span>
+            <span style="font-size:0.58rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);">Price (₹)</span>
+            <span style="font-size:0.58rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);">Badge</span>
+            <span style="font-size:0.58rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);">Actions</span>
+          </div>
+          <div class="product-list" id="productList">
+            <!-- Rows injected by JS -->
+          </div>
+          <button class="add-row-btn" onclick="addProduct()">+ Add New Product</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ STORY ════ -->
+    <div class="panel" id="panel-story">
+      <div class="section-card">
+        <div class="section-card-head"><h3>Artisan Story</h3><span>About Smitarani Mishra — shown in the "Our Story" section</span></div>
+        <div class="section-card-body">
+          <div class="form-row single">
+            <div class="form-group">
+              <label>Pull Quote (from mother / close ones)</label>
+              <textarea id="storyQuote">"Every wall frame, every painting, every shelf in our home — she made it all with her own hands, with a beautiful touch." — Smitarani's mother</textarea>
+            </div>
+          </div>
+          <div class="form-row single">
+            <div class="form-group">
+              <label>Paragraph 1</label>
+              <textarea id="storyP1">Smitarani Mishra's love for art and craft began in childhood — a spark so natural that everything she touched became beautiful. Long before it was a business, it was simply who she was.</textarea>
+            </div>
+          </div>
+          <div class="form-row single">
+            <div class="form-group">
+              <label>Paragraph 2</label>
+              <textarea id="storyP2">She began by making jewellery for herself, quietly and joyfully. When her friends noticed — and began asking her to make pieces for them — the love spread. Word after word, piece after piece, what began as a personal hobby turned into something that touched the lives of hundreds of women across India.</textarea>
+            </div>
+          </div>
+          <div class="form-row single">
+            <div class="form-group">
+              <label>Paragraph 3</label>
+              <textarea id="storyP3">Today, Smitarani's creations are not just jewellery — they are wearable art, each one carrying the warmth of the hands that made them. Her work has been recognised with the prestigious Ananya Award, a testament to her craft and her heart.</textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section-card">
+        <div class="section-card-head"><h3>Artisan Portrait</h3><span>Photo of Smitarani Mishra</span></div>
+        <div class="section-card-body">
+          <div class="img-upload-box" onclick="document.getElementById('artisanImgInput').click()">
+            <input type="file" id="artisanImgInput" accept="image/*" onchange="previewSingle(this,'artisanImgPreview','artisanImgWrap')" style="display:none" />
+            <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <p>Click to upload Smitarani's Portrait</p>
+            <span>Recommended: 600×800px portrait · JPG or PNG</span>
+          </div>
+          <div id="artisanImgWrap" style="margin-top:1rem;display:none;">
+            <img id="artisanImgPreview" style="max-height:220px;border:1px solid var(--border-dk);" />
+            <p class="hint" style="margin-top:0.4rem;">✓ Appears in the Our Story section</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ REVIEWS ════ -->
+    <div class="panel" id="panel-reviews">
+      <div class="section-card">
+        <div class="section-card-head"><h3>Customer Reviews</h3><span>These appear on the website's reviews section</span></div>
+        <div class="section-card-body">
+          <div style="display:grid;grid-template-columns:1fr 2fr 120px 100px;gap:0.5rem;padding:0 1rem 0.5rem;">
+            <span style="font-size:0.58rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);">Name &amp; Location</span>
+            <span style="font-size:0.58rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);">Review Text</span>
+            <span style="font-size:0.58rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);">Stars</span>
+            <span style="font-size:0.58rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);">Actions</span>
+          </div>
+          <div class="review-list" id="reviewList"></div>
+          <button class="add-row-btn" onclick="addReview()">+ Add New Review</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ COLLECTIONS ════ -->
+    <div class="panel" id="panel-collections">
+      <div class="section-card">
+        <div class="section-card-head"><h3>Collection Themes</h3><span>The scrollable collection cards shown on the website</span></div>
+        <div class="section-card-body">
+          <div id="collectionList" style="display:flex;flex-direction:column;gap:0.8rem;"></div>
+          <button class="add-row-btn" onclick="addCollection()">+ Add Collection</button>
+        </div>
+      </div>
+      <div class="section-card">
+        <div class="section-card-head"><h3>Collection Images</h3><span>Upload photos for each collection theme</span></div>
+        <div class="section-card-body">
+          <div class="img-upload-box">
+            <input type="file" accept="image/*" multiple onchange="handleCollectionImgs(this)" />
+            <svg viewBox="0 0 24 24" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <p>Upload collection background images (multiple)</p>
+            <span>One image per collection theme</span>
+          </div>
+          <div class="img-preview-grid" id="collImgGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ ORDERS ════ -->
+    <div class="panel" id="panel-orders">
+      <div class="section-card">
+        <div class="section-card-head"><h3>All Orders</h3><span>Custom &amp; ready-made orders — update status here</span></div>
+        <div class="section-card-body">
+          <div style="display:flex;gap:0.8rem;margin-bottom:1rem;flex-wrap:wrap;">
+            <button style="padding:0.4rem 1rem;font-size:0.72rem;border:1px solid var(--border-dk);background:var(--burg);color:white;cursor:pointer;" onclick="filterOrders('all')">All</button>
+            <button style="padding:0.4rem 1rem;font-size:0.72rem;border:1px solid var(--border-dk);background:var(--white);cursor:pointer;" onclick="filterOrders('new')">New</button>
+            <button style="padding:0.4rem 1rem;font-size:0.72rem;border:1px solid var(--border-dk);background:var(--white);cursor:pointer;" onclick="filterOrders('prog')">In Progress</button>
+            <button style="padding:0.4rem 1rem;font-size:0.72rem;border:1px solid var(--border-dk);background:var(--white);cursor:pointer;" onclick="filterOrders('shipped')">Shipped</button>
+          </div>
+          <table class="orders-table" style="width:100%">
+            <thead><tr><th>#</th><th>Customer</th><th>Phone</th><th>Occasion</th><th>City</th><th>Event Month</th><th>Status</th><th>WhatsApp</th></tr></thead>
+            <tbody id="ordersBodyFull">
+              <tr data-status="new"><td>001</td><td>Priya Sharma</td><td>+91 98XXXXXXXX</td><td>Wedding Reception</td><td>Delhi</td><td>March 2025</td><td><select class="prod-badge-select" style="width:120px" onchange="updateOrderStatus(this,0)"><option value="new" selected>New</option><option value="prog">In Progress</option><option value="done">Completed</option><option value="shipped">Shipped</option></select></td><td><button class="icon-btn" onclick="waContact('Priya Sharma')"><svg viewBox="0 0 24 24" fill="var(--green)" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.531 5.856L.057 23.25a.75.75 0 0 0 .921.919l5.487-1.472A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.498-5.24-1.37l-.375-.214-3.888 1.042 1.059-3.766-.232-.39A9.953 9.953 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></button></td></tr>
+              <tr data-status="prog"><td>002</td><td>Ankita Das</td><td>+91 70XXXXXXXX</td><td>Festival</td><td>Bhubaneswar</td><td>April 2025</td><td><select class="prod-badge-select" style="width:120px"><option value="new">New</option><option value="prog" selected>In Progress</option><option value="done">Completed</option><option value="shipped">Shipped</option></select></td><td><button class="icon-btn" onclick="waContact('Ankita Das')"><svg viewBox="0 0 24 24" fill="var(--green)" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.531 5.856L.057 23.25a.75.75 0 0 0 .921.919l5.487-1.472A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.498-5.24-1.37l-.375-.214-3.888 1.042 1.059-3.766-.232-.39A9.953 9.953 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></button></td></tr>
+              <tr data-status="shipped"><td>003</td><td>Meenakshi Nair</td><td>+91 94XXXXXXXX</td><td>Engagement</td><td>Kochi</td><td>May 2025</td><td><select class="prod-badge-select" style="width:120px"><option value="new">New</option><option value="prog">In Progress</option><option value="done">Completed</option><option value="shipped" selected>Shipped</option></select></td><td><button class="icon-btn" onclick="waContact('Meenakshi Nair')"><svg viewBox="0 0 24 24" fill="var(--green)" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.531 5.856L.057 23.25a.75.75 0 0 0 .921.919l5.487-1.472A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.498-5.24-1.37l-.375-.214-3.888 1.042 1.059-3.766-.232-.39A9.953 9.953 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ CONTACT ════ -->
+    <div class="panel" id="panel-contact">
+      <div class="section-card">
+        <div class="section-card-head"><h3>Contact &amp; Business Info</h3><span>Shown in footer and throughout the site</span></div>
+        <div class="section-card-body">
+          <div class="form-row">
+            <div class="form-group"><label>WhatsApp Number (with country code)</label><input type="text" id="waNumber" value="+91XXXXXXXXXX" /><p class="hint">Used for all WhatsApp buttons on the site</p></div>
+            <div class="form-group"><label>Email Address</label><input type="email" id="emailAddr" value="mycreation@email.com" /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Phone Number (Display)</label><input type="text" id="phoneNum" value="+91 XXXXXXXXXX" /></div>
+            <div class="form-group"><label>Business Location / City</label><input type="text" id="bizCity" value="Bhubaneswar, Odisha, India" /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Instagram URL</label><input type="text" id="instaUrl" value="https://instagram.com/mycreation" /></div>
+            <div class="form-group"><label>Facebook URL</label><input type="text" id="fbUrl" value="https://facebook.com/mycreation" /></div>
+          </div>
+          <div class="form-row single">
+            <div class="form-group"><label>Footer Tagline</label><textarea id="footerTag">Handcrafted jewellery by Smitarani Mishra — where art, tradition, and love come together in every single piece.</textarea></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ SETTINGS ════ -->
+    <div class="panel" id="panel-settings">
+      <div class="settings-grid">
+        <div class="section-card">
+          <div class="section-card-head"><h3>Website Toggles</h3></div>
+          <div class="section-card-body">
+            <div class="toggle-row"><div><div class="toggle-label">Show Award Badge</div><div class="toggle-sub">Ananya Award banner in hero</div></div><label class="toggle"><input type="checkbox" checked /><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><div><div class="toggle-label">WhatsApp Button</div><div class="toggle-sub">Floating WhatsApp button</div></div><label class="toggle"><input type="checkbox" checked /><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><div><div class="toggle-label">Chatbot Section</div><div class="toggle-sub">Show chatbot placeholder</div></div><label class="toggle"><input type="checkbox" checked /><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><div><div class="toggle-label">Reviews Section</div><div class="toggle-sub">Show customer reviews</div></div><label class="toggle"><input type="checkbox" checked /><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><div><div class="toggle-label">New Arrivals Badge</div><div class="toggle-sub">Highlight new arrivals category</div></div><label class="toggle"><input type="checkbox" checked /><span class="toggle-slider"></span></label></div>
+          </div>
+        </div>
+        <div class="section-card">
+          <div class="section-card-head"><h3>Admin Security</h3></div>
+          <div class="section-card-body">
+            <div class="form-group" style="margin-bottom:1rem;"><label>Username</label><input type="text" id="newUser" value="admin" /></div>
+            <div class="form-group" style="margin-bottom:1rem;"><label>New Password</label><input type="password" id="newPass" placeholder="Enter new password" /></div>
+            <div class="form-group" style="margin-bottom:1rem;"><label>Confirm Password</label><input type="password" id="confPass" placeholder="Confirm new password" /></div>
+            <button class="save-all-btn" onclick="changePassword()" style="width:100%">Update Password</button>
+          </div>
+        </div>
+        <div class="section-card" style="grid-column:1/-1;">
+          <div class="section-card-head"><h3>Export / Backup Data</h3><span>Use this to sync content to your website</span></div>
+          <div class="section-card-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;">
+              <div style="padding:1.2rem;background:var(--warm);border:1px solid var(--border-dk);">
+                <div style="font-size:0.7rem;font-weight:600;color:var(--burg);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;">Export Site Data</div>
+                <div style="font-size:0.78rem;color:var(--muted);line-height:1.6;margin-bottom:1rem;">Downloads a <code>data.json</code> file with all your content — products, reviews, story text, contact info. Your developer pastes this into the website.</div>
+                <button class="save-all-btn" onclick="exportData()" style="background:var(--burg);">↓ Export data.json</button>
+              </div>
+              <div style="padding:1.2rem;background:var(--warm);border:1px solid var(--border-dk);">
+                <div style="font-size:0.7rem;font-weight:600;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;">Import Data</div>
+                <div style="font-size:0.78rem;color:var(--muted);line-height:1.6;margin-bottom:1rem;">Load a previously saved <code>data.json</code> to restore your content or move between devices.</div>
+                <label style="display:inline-block;padding:0.55rem 1.4rem;background:var(--gold);color:var(--dark);font-size:0.72rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;">↑ Import data.json<input type="file" accept=".json" onchange="importData(this)" style="display:none" /></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── STATE ──────────────────────────────────────────
+const CREDS = { user: 'admin', pass: 'mycreation123' };
+let products = [
+  { name:'Traditional Jhumka Pair', cat:'Earrings · Assamese', price:'', badge:'New', img:'' },
+  { name:'Sambalpuri Beaded Haar',  cat:'Necklace · Sambalpuri', price:'', badge:'', img:'' },
+  { name:'Wedding Bridal Set',      cat:'Full Set · Bridal', price:'', badge:'Bestseller', img:'' },
+  { name:'Silk Potli Bag',          cat:'Potli Bag · Embroidered', price:'', badge:'', img:'' },
+];
+let reviews = [
+  { name:'Priya Sharma', loc:'Delhi · Wedding', text:'I ordered a custom set for my wedding reception and it was beyond my expectations. Smitarani understood my vision perfectly!', stars:'5' },
+  { name:'Ankita Das',   loc:'Bhubaneswar · Ready-Made', text:'The Sambalpuri earrings I got are absolutely stunning. You can feel the love and care in every bead.', stars:'5' },
+  { name:'Meenakshi Nair', loc:'Kochi · Custom Order', text:'Got a custom potli bag and necklace set for my sister\'s engagement. The result was just magical!', stars:'5' },
+];
+let collections = [
+  { name:'Assamese', origin:'Northeast India', emoji:'🏮' },
+  { name:'Sambalpuri', origin:'Western Odisha', emoji:'🌸' },
+  { name:'Bengali', origin:'East India', emoji:'🌺' },
+  { name:'Arabian', origin:'Inspired by Arabia', emoji:'🌙' },
+  { name:'Boho', origin:'Free Spirit Style', emoji:'🍃' },
+];
+
+// ── LOGIN ──────────────────────────────────────────
+function doLogin() {
+  const u = document.getElementById('loginUser').value;
+  const p = document.getElementById('loginPass').value;
+  const stored = JSON.parse(localStorage.getItem('mc_creds') || 'null');
+  const validUser = stored ? stored.user : CREDS.user;
+  const validPass = stored ? stored.pass : CREDS.pass;
+  if (u === validUser && p === validPass) {
+    document.getElementById('loginScreen').style.display = 'none';
+    renderAll();
+  } else {
+    document.getElementById('loginErr').style.display = 'block';
+  }
+}
+function doLogout() { document.getElementById('loginScreen').style.display = 'flex'; }
+document.getElementById('loginUser').addEventListener('keydown', e => e.key==='Enter' && doLogin());
+document.getElementById('loginPass').addEventListener('keydown', e => e.key==='Enter' && doLogin());
+// Auto-login if session cookie set
+if (sessionStorage.getItem('mc_logged')) {
+  document.getElementById('loginScreen').style.display = 'none';
+  renderAll();
+}
+function doLogin() {
+  const u = document.getElementById('loginUser').value;
+  const p = document.getElementById('loginPass').value;
+  const stored = JSON.parse(localStorage.getItem('mc_creds') || 'null');
+  const validUser = stored ? stored.user : CREDS.user;
+  const validPass = stored ? stored.pass : CREDS.pass;
+  if (u === validUser && p === validPass) {
+    document.getElementById('loginScreen').style.display = 'none';
+    sessionStorage.setItem('mc_logged','1');
+    renderAll();
+  } else {
+    document.getElementById('loginErr').style.display = 'block';
+  }
+}
+
+// ── PANEL NAV ──────────────────────────────────────
+const titles = { dashboard:'Dashboard', hero:'Hero Section', products:'Products', story:'Artisan Story', reviews:'Reviews', collections:'Collections', orders:'Orders', contact:'Contact & Info', settings:'Settings' };
+function showPanel(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  el.classList.add('active');
+  document.getElementById('panelTitle').textContent = titles[id];
+}
+
+// ── RENDER PRODUCTS ────────────────────────────────
+function renderProducts() {
+  const list = document.getElementById('productList');
+  list.innerHTML = '';
+  products.forEach((p, i) => {
+    const row = document.createElement('div');
+    row.className = 'product-row';
+    row.innerHTML = `
+      <div class="product-row-img" onclick="triggerProductImg(${i})" title="Click to upload image">
+        ${p.img ? `<img src="${p.img}" />` : '<span>📷</span>'}
+        <input type="file" accept="image/*" id="prodImg${i}" onchange="setProductImg(${i},this)" style="display:none" />
+      </div>
+      <input class="prod-input" value="${p.name}" oninput="products[${i}].name=this.value" placeholder="Product name" />
+      <input class="prod-input" value="${p.cat}"  oninput="products[${i}].cat=this.value"  placeholder="Category · Style" />
+      <input class="prod-input" value="${p.price}" oninput="products[${i}].price=this.value" placeholder="₹ Price" />
+      <select class="prod-badge-select" onchange="products[${i}].badge=this.value">
+        <option value="" ${!p.badge?'selected':''}>No Badge</option>
+        <option value="New" ${p.badge==='New'?'selected':''}>New</option>
+        <option value="Bestseller" ${p.badge==='Bestseller'?'selected':''}>Bestseller</option>
+        <option value="Sale" ${p.badge==='Sale'?'selected':''}>Sale</option>
+      </select>
+      <div class="row-actions">
+        <button class="icon-btn danger" title="Delete" onclick="deleteProduct(${i})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+        </button>
+      </div>`;
+    list.appendChild(row);
+  });
+  document.getElementById('stat-products').textContent = products.length;
+}
+function triggerProductImg(i) { document.getElementById('prodImg'+i).click(); }
+function setProductImg(i, input) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => { products[i].img = e.target.result; renderProducts(); };
+  reader.readAsDataURL(file);
+}
+function addProduct() {
+  products.push({ name:'New Product', cat:'Category', price:'', badge:'', img:'' });
+  renderProducts();
+}
+function deleteProduct(i) {
+  if (!confirm('Remove this product?')) return;
+  products.splice(i, 1); renderProducts();
+}
+
+// ── RENDER REVIEWS ─────────────────────────────────
+function renderReviews() {
+  const list = document.getElementById('reviewList');
+  list.innerHTML = '';
+  reviews.forEach((r, i) => {
+    const row = document.createElement('div');
+    row.className = 'review-row';
+    row.innerHTML = `
+      <div>
+        <input class="prod-input" value="${r.name}" oninput="reviews[${i}].name=this.value" placeholder="Reviewer name" style="margin-bottom:0.4rem" />
+        <input class="prod-input" value="${r.loc}"  oninput="reviews[${i}].loc=this.value"  placeholder="City · Order type" />
+      </div>
+      <textarea class="prod-input" oninput="reviews[${i}].text=this.value" style="min-height:70px;resize:vertical;">${r.text}</textarea>
+      <select class="stars-select" onchange="reviews[${i}].stars=this.value">
+        <option value="5" ${r.stars==='5'?'selected':''}>★★★★★ 5 Stars</option>
+        <option value="4" ${r.stars==='4'?'selected':''}>★★★★☆ 4 Stars</option>
+        <option value="3" ${r.stars==='3'?'selected':''}>★★★☆☆ 3 Stars</option>
+      </select>
+      <button class="icon-btn danger" onclick="deleteReview(${i})">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
+      </button>`;
+    list.appendChild(row);
+  });
+}
+function addReview() {
+  reviews.push({ name:'Customer Name', loc:'City · Order Type', text:'Review text here...', stars:'5' });
+  renderReviews();
+}
+function deleteReview(i) {
+  if (!confirm('Remove this review?')) return;
+  reviews.splice(i, 1); renderReviews();
+}
+
+// ── RENDER COLLECTIONS ─────────────────────────────
+function renderCollections() {
+  const list = document.getElementById('collectionList');
+  list.innerHTML = '';
+  collections.forEach((c, i) => {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:grid;grid-template-columns:50px 1fr 1fr 40px;gap:0.8rem;align-items:center;padding:0.7rem;background:var(--cream);border:1px solid var(--border);';
+    row.innerHTML = `
+      <input class="prod-input" value="${c.emoji}" oninput="collections[${i}].emoji=this.value" style="text-align:center;font-size:1.3rem;" />
+      <input class="prod-input" value="${c.name}" oninput="collections[${i}].name=this.value" placeholder="Collection name" />
+      <input class="prod-input" value="${c.origin}" oninput="collections[${i}].origin=this.value" placeholder="Origin / Description" />
+      <button class="icon-btn danger" onclick="deleteCollection(${i})"><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg></button>`;
+    list.appendChild(row);
+  });
+}
+function addCollection() {
+  collections.push({ name:'New Collection', origin:'Region / Style', emoji:'✨' });
+  renderCollections();
+}
+function deleteCollection(i) { collections.splice(i,1); renderCollections(); }
+
+// ── IMAGE HELPERS ──────────────────────────────────
+function previewSingle(input, imgId, wrapId) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById(imgId).src = e.target.result;
+    document.getElementById(wrapId).style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+function handleCollectionImgs(input) {
+  const grid = document.getElementById('collImgGrid');
+  Array.from(input.files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const div = document.createElement('div');
+      div.className = 'img-preview';
+      div.innerHTML = `<img src="${e.target.result}" /><button class="del-btn" onclick="this.parentElement.remove()">×</button>`;
+      grid.appendChild(div);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// ── ORDERS ────────────────────────────────────────
+function filterOrders(status) {
+  document.querySelectorAll('#ordersBodyFull tr').forEach(tr => {
+    tr.style.display = (status === 'all' || tr.dataset.status === status) ? '' : 'none';
+  });
+}
+function waContact(name) {
+  const num = document.getElementById('waNumber') ? document.getElementById('waNumber').value.replace(/\D/g,'') : '91XXXXXXXXXX';
+  window.open(`https://wa.me/${num}?text=Hi!%20Following%20up%20on%20${encodeURIComponent(name)}'s%20order.`, '_blank');
+}
+
+// ── SAVE / EXPORT / IMPORT ─────────────────────────
+function saveAll() {
+  const data = collectData();
+  localStorage.setItem('mc_site_data', JSON.stringify(data));
+  showToast('✓ Changes saved successfully!');
+}
+function collectData() {
+  return {
+    hero: {
+      line1: document.getElementById('heroLine1')?.value,
+      line2: document.getElementById('heroLine2')?.value,
+      sub:   document.getElementById('heroSub')?.value,
+      stat1: document.getElementById('stat1')?.value,  stat1l: document.getElementById('stat1l')?.value,
+      stat2: document.getElementById('stat2')?.value,  stat2l: document.getElementById('stat2l')?.value,
+      stat3: document.getElementById('stat3')?.value,  stat3l: document.getElementById('stat3l')?.value,
+    },
+    story: {
+      quote: document.getElementById('storyQuote')?.value,
+      p1: document.getElementById('storyP1')?.value,
+      p2: document.getElementById('storyP2')?.value,
+      p3: document.getElementById('storyP3')?.value,
+    },
+    contact: {
+      wa:    document.getElementById('waNumber')?.value,
+      email: document.getElementById('emailAddr')?.value,
+      phone: document.getElementById('phoneNum')?.value,
+      city:  document.getElementById('bizCity')?.value,
+      insta: document.getElementById('instaUrl')?.value,
+      fb:    document.getElementById('fbUrl')?.value,
+      footerTag: document.getElementById('footerTag')?.value,
+    },
+    products, reviews, collections
+  };
+}
+function exportData() {
+  const data = collectData();
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'mycreation-data.json'; a.click();
+  showToast('✓ data.json downloaded!');
+}
+function importData(input) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.products) { products = data.products; renderProducts(); }
+      if (data.reviews)  { reviews  = data.reviews;  renderReviews(); }
+      if (data.collections) { collections = data.collections; renderCollections(); }
+      if (data.hero) {
+        ['heroLine1','heroLine2','heroSub','stat1','stat1l','stat2','stat2l','stat3','stat3l'].forEach(id => {
+          const key = id.replace('hero','').replace('Line','line').toLowerCase();
+          const el = document.getElementById(id); if (el && data.hero[key]) el.value = data.hero[key];
+        });
+      }
+      showToast('✓ Data imported successfully!');
+    } catch { showToast('✗ Invalid JSON file'); }
+  };
+  reader.readAsText(file);
+}
+
+// ── PASSWORD CHANGE ────────────────────────────────
+function changePassword() {
+  const u = document.getElementById('newUser').value;
+  const p = document.getElementById('newPass').value;
+  const c = document.getElementById('confPass').value;
+  if (!p) { showToast('✗ Password cannot be empty'); return; }
+  if (p !== c) { showToast('✗ Passwords do not match'); return; }
+  localStorage.setItem('mc_creds', JSON.stringify({ user: u, pass: p }));
+  showToast('✓ Password updated successfully!');
+}
+
+// ── TOAST ──────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── INIT ───────────────────────────────────────────
+function renderAll() {
+  const saved = localStorage.getItem('mc_site_data');
+  if (saved) {
+    try {
+      const data = JSON.parse(saved);
+      if (data.products) products = data.products;
+      if (data.reviews)  reviews  = data.reviews;
+      if (data.collections) collections = data.collections;
+    } catch {}
+  }
+  renderProducts();
+  renderReviews();
+  renderCollections();
+}
+</script>
+</body>
+</html>

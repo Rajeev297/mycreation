@@ -1,0 +1,105 @@
+{
+  "hero": {
+    "line1": "Jewellery Fahhhh",
+    "line2": "for Your Occasion",
+    "sub": "Each piece is handcrafted with love, tradition, and an artistic soul — made to match your outfit, your culture, and your celebration.",
+    "stat1": "500+",
+    "stat1l": "Happy Clients",
+    "stat2": "8+",
+    "stat2l": "Years of Craft",
+    "stat3": "100%",
+    "stat3l": "Handmade"
+  },
+  "story": {
+    "quote": "\"Every wall frame, every painting, every shelf in our home — she made it all with her own hands, with a beautiful touch.\" — Smitarani's mother",
+    "p1": "Smitarani Mishra's love for art and craft began in childhood — a spark so natural that everything she touched became beautiful. Long before it was a business, it was simply who she was.",
+    "p2": "She began by making jewellery for herself, quietly and joyfully. When her friends noticed — and began asking her to make pieces for them — the love spread. Word after word, piece after piece, what began as a personal hobby turned into something that touched the lives of hundreds of women across India.",
+    "p3": "Today, Smitarani's creations are not just jewellery — they are wearable art, each one carrying the warmth of the hands that made them. Her work has been recognised with the prestigious Ananya Award, a testament to her craft and her heart."
+  },
+  "contact": {
+    "wa": "+91XXXXXXXXXX",
+    "email": "mycreation@email.com",
+    "phone": "+91 XXXXXXXXXX",
+    "city": "Bhubaneswar, Odisha, India",
+    "insta": "https://instagram.com/mycreation",
+    "fb": "https://facebook.com/mycreation",
+    "footerTag": "Handcrafted jewellery by Smitarani Mishra — where art, tradition, and love come together in every single piece."
+  },
+  "products": [
+    {
+      "name": "Traditional Jhumka Pair",
+      "cat": "Earrings · Assamese",
+      "price": "",
+      "badge": "New",
+      "img": ""
+    },
+    {
+      "name": "Sambalpuri Beaded Haar",
+      "cat": "Necklace · Sambalpuri",
+      "price": "",
+      "badge": "",
+      "img": ""
+    },
+    {
+      "name": "Wedding Bridal Set",
+      "cat": "Full Set · Bridal",
+      "price": "",
+      "badge": "Bestseller",
+      "img": ""
+    },
+    {
+      "name": "Silk Potli Bag",
+      "cat": "Potli Bag · Embroidered",
+      "price": "",
+      "badge": "",
+      "img": ""
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Priya Sharma",
+      "loc": "Delhi · Wedding",
+      "text": "I ordered a custom set for my wedding reception and it was beyond my expectations. Smitarani understood my vision perfectly!",
+      "stars": "5"
+    },
+    {
+      "name": "Ankita Das",
+      "loc": "Bhubaneswar · Ready-Made",
+      "text": "The Sambalpuri earrings I got are absolutely stunning. You can feel the love and care in every bead.",
+      "stars": "5"
+    },
+    {
+      "name": "Meenakshi Nair",
+      "loc": "Kochi · Custom Order",
+      "text": "Got a custom potli bag and necklace set for my sister's engagement. The result was just magical!",
+      "stars": "5"
+    }
+  ],
+  "collections": [
+    {
+      "name": "Assamese",
+      "origin": "Northeast India",
+      "emoji": "🏮"
+    },
+    {
+      "name": "Sambalpuri",
+      "origin": "Western Odisha",
+      "emoji": "🌸"
+    },
+    {
+      "name": "Bengali",
+      "origin": "East India",
+      "emoji": "🌺"
+    },
+    {
+      "name": "Arabian",
+      "origin": "Inspired by Arabia",
+      "emoji": "🌙"
+    },
+    {
+      "name": "Boho",
+      "origin": "Free Spirit Style",
+      "emoji": "🍃"
+    }
+  ]
+}
