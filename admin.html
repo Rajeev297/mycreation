@@ -352,7 +352,7 @@
     <div class="topbar-title" id="panelTitle">Dashboard</div>
     <div class="topbar-right">
       <span class="topbar-badge">🔒 Secure Session</span>
-      <button class="preview-btn" onclick="window.open('index.html','_blank')">↗ Preview Site</button>
+      <button class="preview-btn" onclick="window.open('/index.html','_blank')">↗ Preview Site</button>
       <button class="save-all-btn" onclick="saveAll()">✦ Save Changes</button>
     </div>
   </div>
@@ -775,7 +775,11 @@ function triggerProductImg(i) { document.getElementById('prodImg'+i).click(); }
 function setProductImg(i, input) {
   const file = input.files[0]; if (!file) return;
   const reader = new FileReader();
-  reader.onload = e => { products[i].img = e.target.result; renderProducts(); };
+  reader.onload = e => {
+    products[i].img = e.target.result;
+    try { localStorage.setItem('mc_prodImg_' + i, e.target.result); } catch(err) { console.warn('Product image too large'); }
+    renderProducts();
+  };
   reader.readAsDataURL(file);
 }
 function addProduct() {
@@ -880,7 +884,27 @@ function waContact(name) {
 function saveAll() {
   const data = collectData();
   localStorage.setItem('mc_site_data', JSON.stringify(data));
-  showToast('✓ Changes saved successfully!');
+
+  // Save hero image separately so website reads it
+  const heroImgEl = document.getElementById('heroImgPreview');
+  if (heroImgEl && heroImgEl.src && heroImgEl.src.startsWith('data:')) {
+    try { localStorage.setItem('mc_heroImg', heroImgEl.src); } catch(e) { console.warn('Hero image too large for localStorage'); }
+  }
+
+  // Save artisan portrait separately
+  const artisanImgEl = document.getElementById('artisanImgPreview');
+  if (artisanImgEl && artisanImgEl.src && artisanImgEl.src.startsWith('data:')) {
+    try { localStorage.setItem('mc_artisanImg', artisanImgEl.src); } catch(e) { console.warn('Artisan image too large for localStorage'); }
+  }
+
+  // Save product images into the products array before saving
+  products.forEach((p, i) => {
+    const saved = localStorage.getItem('mc_prodImg_' + i);
+    if (saved) p.img = saved;
+  });
+  localStorage.setItem('mc_site_data', JSON.stringify(collectData()));
+
+  showToast('✓ Saved! Refresh the website to see changes.');
 }
 function collectData() {
   return {
@@ -965,7 +989,49 @@ function renderAll() {
       if (data.products) products = data.products;
       if (data.reviews)  reviews  = data.reviews;
       if (data.collections) collections = data.collections;
+      // restore contact fields
+      if (data.contact) {
+        const m = { waNumber:'wa', emailAddr:'email', phoneNum:'phone', bizCity:'city', instaUrl:'insta', fbUrl:'fb', footerTag:'footerTag' };
+        Object.entries(m).forEach(([elId, key]) => {
+          const el = document.getElementById(elId); if (el && data.contact[key]) el.value = data.contact[key];
+        });
+      }
+      // restore hero fields
+      if (data.hero) {
+        const m2 = { heroLine1:'line1', heroLine2:'line2', heroSub:'sub', stat1:'stat1', stat1l:'stat1l', stat2:'stat2', stat2l:'stat2l', stat3:'stat3', stat3l:'stat3l' };
+        Object.entries(m2).forEach(([elId, key]) => {
+          const el = document.getElementById(elId); if (el && data.hero[key]) el.value = data.hero[key];
+        });
+      }
+      // restore story fields
+      if (data.story) {
+        const m3 = { storyQuote:'quote', storyP1:'p1', storyP2:'p2', storyP3:'p3' };
+        Object.entries(m3).forEach(([elId, key]) => {
+          const el = document.getElementById(elId); if (el && data.story[key]) el.value = data.story[key];
+        });
+      }
     } catch {}
+  }
+  // Restore product images from individual keys
+  products.forEach((p, i) => {
+    const img = localStorage.getItem('mc_prodImg_' + i);
+    if (img) p.img = img;
+  });
+  // Restore hero image preview
+  const heroImg = localStorage.getItem('mc_heroImg');
+  if (heroImg) {
+    const el = document.getElementById('heroImgPreview');
+    const wrap = document.getElementById('heroImgWrap');
+    if (el) { el.src = heroImg; }
+    if (wrap) wrap.style.display = 'block';
+  }
+  // Restore artisan image preview
+  const artisanImg = localStorage.getItem('mc_artisanImg');
+  if (artisanImg) {
+    const el = document.getElementById('artisanImgPreview');
+    const wrap = document.getElementById('artisanImgWrap');
+    if (el) { el.src = artisanImg; }
+    if (wrap) wrap.style.display = 'block';
   }
   renderProducts();
   renderReviews();

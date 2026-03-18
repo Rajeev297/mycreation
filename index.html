@@ -6,253 +6,252 @@
   <title>My Creation – Handmade Jewellery by Smitarani Mishra</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="shortcut icon" href="logo.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&family=Cinzel:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --burg:       #9c2645;
-      --burg-dk:    #6d1730;
-      --burg-lt:    #c23458;
-      --burg-soft:  #e8a0b4;
-      --gold:       #c9973a;
-      --gold-lt:    #d4a843;
-      --gold-sheen: #e8c96d;
-      --cream:      #fdf5f7;
-      --warm:       #f7e8ed;
-      --border:     #eedde4;
-      --border-dk:  #d9bec8;
-      --dark:       #2a0d17;
-      --text:       #3d1422;
-      --muted:      #8a5265;
-      --white:      #ffffff;
-      --shadow:     rgba(120,30,60,0.12);
-      --green-wa:   #25d366;
+      --burg:#9c2645;--burg-dk:#6d1730;--burg-lt:#c23458;--burg-soft:#e8a0b4;
+      --gold:#c9973a;--gold-lt:#d4a843;--gold-sheen:#e8c96d;
+      --cream:#fdf5f7;--warm:#f7e8ed;--border:#eedde4;--border-dk:#d9bec8;
+      --dark:#2a0d17;--text:#3d1422;--muted:#8a5265;--white:#ffffff;
+      --shadow:rgba(120,30,60,0.12);--green-wa:#25d366;
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
-    img { display: block; max-width: 100%; }
-    a  { text-decoration: none; color: inherit; }
-    ul { list-style: none; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;}
+    img{display:block;max-width:100%;}
+    a{text-decoration:none;color:inherit;}
+    ul{list-style:none;}
 
-    .section-label { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-lt); margin-bottom: 0.55rem; }
-    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; line-height: 1.12; color: var(--dark); }
+    .section-label{font-family:'Jost',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:.55rem;}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:300;line-height:1.12;color:var(--dark);}
+    .btn-primary{display:inline-flex;align-items:center;gap:.5rem;background:var(--burg);color:var(--white);font-family:'Jost',sans-serif;font-size:.75rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;padding:.95rem 2.4rem;border:none;cursor:pointer;transition:background .3s,transform .2s;}
+    .btn-primary:hover{background:var(--burg-dk);transform:translateY(-2px);}
+    .btn-outline{display:inline-flex;align-items:center;gap:.5rem;background:transparent;color:var(--burg);font-family:'Jost',sans-serif;font-size:.75rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;padding:.9rem 2.1rem;border:1.5px solid var(--burg);cursor:pointer;transition:background .3s,color .3s;}
+    .btn-outline:hover{background:var(--burg);color:var(--white);}
 
-    .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--burg); color: var(--white); font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.95rem 2.4rem; border: none; cursor: pointer; transition: background 0.3s, transform 0.2s; }
-    .btn-primary:hover { background: var(--burg-dk); transform: translateY(-2px); }
-    .btn-outline { display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; color: var(--burg); font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.9rem 2.1rem; border: 1.5px solid var(--burg); cursor: pointer; transition: background 0.3s, color 0.3s; }
-    .btn-outline:hover { background: var(--burg); color: var(--white); }
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:999;display:flex;align-items:center;justify-content:space-between;padding:.6rem 4%;background:rgba(253,245,247,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:box-shadow .3s;}
+    nav.scrolled{box-shadow:0 2px 24px var(--shadow);}
+    .nav-logo img{height:60px;width:auto;object-fit:contain;mix-blend-mode:multiply;}
+    .nav-links{display:flex;gap:2rem;align-items:center;}
+    .nav-links a{font-size:.75rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--text);transition:color .2s;position:relative;}
+    .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1.5px;background:var(--burg);transform:scaleX(0);transform-origin:right;transition:transform .3s;}
+    .nav-links a:hover{color:var(--burg);}
+    .nav-links a:hover::after{transform:scaleX(1);transform-origin:left;}
+    .nav-cta{background:var(--burg)!important;color:var(--white)!important;padding:.5rem 1.4rem;font-size:.7rem!important;}
+    .nav-cta::after{display:none!important;}
+    .nav-cta:hover{background:var(--burg-dk)!important;}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+    .hamburger span{width:24px;height:1.5px;background:var(--dark);}
 
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 999; display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 4%; background: rgba(253,245,247,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
-    nav.scrolled { box-shadow: 0 2px 24px var(--shadow); }
-    .nav-logo img { height: 60px; width: auto; object-fit: contain; mix-blend-mode: multiply; }
-    .nav-links { display: flex; gap: 2rem; align-items: center; }
-    .nav-links a { font-size: 0.75rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text); transition: color 0.2s; position: relative; }
-    .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1.5px; background: var(--burg); transform: scaleX(0); transform-origin: right; transition: transform 0.3s; }
-    .nav-links a:hover { color: var(--burg); }
-    .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
-    .nav-cta { background: var(--burg) !important; color: var(--white) !important; padding: 0.5rem 1.4rem; font-size: 0.7rem !important; }
-    .nav-cta::after { display: none !important; }
-    .nav-cta:hover { background: var(--burg-dk) !important; }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-    .hamburger span { width: 24px; height: 1.5px; background: var(--dark); }
+    /* HERO */
+    .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:76px;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 0% 100%,rgba(156,38,69,.06) 0%,transparent 55%),radial-gradient(ellipse at 100% 0%,rgba(201,151,58,.05) 0%,transparent 50%);pointer-events:none;}
+    .hero-deco-top{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--burg),var(--gold-lt),var(--burg));}
+    .hero-left{display:flex;flex-direction:column;justify-content:center;padding:6% 5% 6% 6%;position:relative;z-index:2;}
+    .hero-award{display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(135deg,var(--warm),#f0d6e0);border:1px solid var(--border-dk);padding:.4rem 1.1rem;font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--burg);margin-bottom:2rem;width:fit-content;}
+    .hero-award svg{width:13px;height:13px;fill:var(--gold-lt);flex-shrink:0;}
+    .hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,5vw,4.8rem);font-weight:300;line-height:1.07;color:var(--dark);margin-bottom:1.4rem;}
+    .hero-title em{font-style:italic;color:var(--burg-lt);}
+    .hero-sub{font-size:.92rem;font-weight:300;line-height:1.8;color:var(--muted);max-width:400px;margin-bottom:2.8rem;}
+    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+    .hero-stats{display:flex;gap:2.5rem;margin-top:3.5rem;padding-top:2rem;border-top:1px solid var(--border-dk);}
+    .stat-num{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:400;color:var(--burg);line-height:1;}
+    .stat-label{font-size:.62rem;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:.25rem;}
+    .hero-right{position:relative;overflow:hidden;}
+    .hero-img-placeholder{width:100%;height:100%;min-height:600px;background:linear-gradient(145deg,var(--warm) 0%,#f0d4de 50%,var(--border) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;color:var(--muted);}
+    .hero-img-placeholder svg{width:64px;height:64px;opacity:.22;}
+    .hero-img-placeholder p{font-size:.78rem;letter-spacing:.12em;opacity:.5;}
+    .hero-img-main{width:100%;height:100%;min-height:600px;object-fit:cover;}
+    .hero-overlay-badge{position:absolute;bottom:2rem;left:-1.2rem;background:var(--white);border:1px solid var(--border-dk);border-left:3px solid var(--burg);padding:1rem 1.5rem;box-shadow:0 8px 32px var(--shadow);}
+    .badge-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;color:var(--dark);}
+    .badge-sub{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:3px;}
 
-    .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 76px; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 0% 100%, rgba(156,38,69,0.06) 0%, transparent 55%), radial-gradient(ellipse at 100% 0%, rgba(201,151,58,0.05) 0%, transparent 50%); pointer-events: none; }
-    .hero-deco-top { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--burg), var(--gold-lt), var(--burg)); }
-    .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 6% 5% 6% 6%; position: relative; z-index: 2; }
-    .hero-award { display: inline-flex; align-items: center; gap: 0.6rem; background: linear-gradient(135deg, var(--warm), #f0d6e0); border: 1px solid var(--border-dk); padding: 0.4rem 1.1rem; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--burg); margin-bottom: 2rem; width: fit-content; }
-    .hero-award svg { width: 13px; height: 13px; fill: var(--gold-lt); flex-shrink: 0; }
-    .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 5vw, 4.8rem); font-weight: 300; line-height: 1.07; color: var(--dark); margin-bottom: 1.4rem; }
-    .hero-title em { font-style: italic; color: var(--burg-lt); }
-    .hero-sub { font-size: 0.92rem; font-weight: 300; line-height: 1.8; color: var(--muted); max-width: 400px; margin-bottom: 2.8rem; }
-    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .hero-stats { display: flex; gap: 2.5rem; margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border-dk); }
-    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.1rem; font-weight: 400; color: var(--burg); line-height: 1; }
-    .stat-label { font-size: 0.62rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-top: 0.25rem; }
-    .hero-right { position: relative; overflow: hidden; }
-    .hero-img-placeholder { width: 100%; height: 100%; min-height: 600px; background: linear-gradient(145deg, var(--warm) 0%, #f0d4de 50%, var(--border) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; color: var(--muted); }
-    .hero-img-placeholder svg { width: 64px; height: 64px; opacity: 0.22; }
-    .hero-img-placeholder p { font-size: 0.78rem; letter-spacing: 0.12em; opacity: 0.5; }
-    .hero-overlay-badge { position: absolute; bottom: 2rem; left: -1.2rem; background: var(--white); border: 1px solid var(--border-dk); border-left: 3px solid var(--burg); padding: 1rem 1.5rem; box-shadow: 0 8px 32px var(--shadow); }
-    .badge-text { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 400; color: var(--dark); }
-    .badge-sub { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+    /* MARQUEE */
+    .marquee-bar{background:var(--burg-dk);padding:.9rem 0;overflow:hidden;white-space:nowrap;}
+    .marquee-track{display:inline-flex;animation:marquee 30s linear infinite;}
+    .marquee-item{font-size:.62rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:#f7c5d4;padding:0 2.5rem;}
+    .marquee-dot{color:var(--gold-sheen);}
+    @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
-    .marquee-bar { background: var(--burg-dk); padding: 0.9rem 0; overflow: hidden; white-space: nowrap; }
-    .marquee-track { display: inline-flex; animation: marquee 30s linear infinite; }
-    .marquee-item { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: #f7c5d4; padding: 0 2.5rem; }
-    .marquee-dot { color: var(--gold-sheen); }
-    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    /* CATEGORIES */
+    .categories{padding:5rem 5%;background:var(--warm);}
+    .cat-header{text-align:center;margin-bottom:2.5rem;}
+    .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:1.2rem;}
+    .cat-card{background:var(--white);border:1px solid var(--border-dk);padding:2rem 1rem;text-align:center;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;}
+    .cat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--burg),var(--gold-lt));transform:scaleX(0);transition:transform .3s;}
+    .cat-card:hover{transform:translateY(-5px);box-shadow:0 12px 30px var(--shadow);}
+    .cat-card:hover::after{transform:scaleX(1);}
+    .cat-icon{font-size:1.9rem;margin-bottom:.65rem;}
+    .cat-name{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:400;color:var(--dark);}
+    .cat-count{font-size:.62rem;letter-spacing:.12em;color:var(--muted);margin-top:.2rem;}
+    .cat-card.featured{background:linear-gradient(135deg,var(--burg),var(--burg-lt));border-color:var(--burg);}
+    .cat-card.featured .cat-name,.cat-card.featured .cat-count{color:white;}
 
-    .categories { padding: 5rem 5%; background: var(--warm); }
-    .cat-header { text-align: center; margin-bottom: 2.5rem; }
-    .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 1.2rem; }
-    .cat-card { background: var(--white); border: 1px solid var(--border-dk); padding: 2rem 1rem; text-align: center; cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden; }
-    .cat-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--burg), var(--gold-lt)); transform: scaleX(0); transition: transform 0.3s; }
-    .cat-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px var(--shadow); }
-    .cat-card:hover::after { transform: scaleX(1); }
-    .cat-icon { font-size: 1.9rem; margin-bottom: 0.65rem; }
-    .cat-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400; color: var(--dark); }
-    .cat-count { font-size: 0.62rem; letter-spacing: 0.12em; color: var(--muted); margin-top: 0.2rem; }
-    .cat-card.featured { background: linear-gradient(135deg, var(--burg), var(--burg-lt)); border-color: var(--burg); }
-    .cat-card.featured .cat-name { color: white; }
-    .cat-card.featured .cat-count { color: rgba(255,255,255,0.7); }
+    /* PRODUCTS */
+    .collections{padding:6rem 5%;background:var(--cream);}
+    .collections-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;}
+    .collections-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.6rem;}
+    .product-card{background:var(--white);border:1px solid var(--border-dk);overflow:hidden;cursor:pointer;transition:transform .3s,box-shadow .3s;position:relative;}
+    .product-card:hover{transform:translateY(-7px);box-shadow:0 20px 48px var(--shadow);}
+    .product-img-wrap{width:100%;aspect-ratio:3/4;overflow:hidden;}
+    .product-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+    .product-card:hover .product-img-wrap img{transform:scale(1.04);}
+    .product-img-placeholder{width:100%;aspect-ratio:3/4;background:linear-gradient(160deg,var(--warm),#f0d4de,var(--border));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;color:var(--muted);}
+    .product-img-placeholder svg{width:42px;height:42px;opacity:.25;}
+    .product-img-placeholder span{font-size:.68rem;letter-spacing:.1em;opacity:.45;}
+    .product-badge{position:absolute;top:1rem;left:1rem;background:var(--burg);color:white;font-size:.56rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:.28rem .75rem;}
+    .product-badge.gold-badge{background:var(--gold);}
+    .product-info{padding:1.3rem;}
+    .product-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:400;color:var(--dark);margin-bottom:.2rem;}
+    .product-cat{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.55rem;}
+    .product-price{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--burg);}
+    .product-action{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:.8rem;border-top:1px solid var(--border);}
+    .action-link{font-size:.66rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--burg);transition:color .2s;}
+    .action-wa{width:32px;height:32px;border-radius:50%;background:var(--green-wa);display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s;}
+    .action-wa:hover{background:#128c57;transform:scale(1.1);}
+    .action-wa svg{width:16px;height:16px;fill:white;}
 
-    .collections { padding: 6rem 5%; background: var(--cream); }
-    .collections-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
-    .collections-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.6rem; }
-    .product-card { background: var(--white); border: 1px solid var(--border-dk); overflow: hidden; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; position: relative; }
-    .product-card:hover { transform: translateY(-7px); box-shadow: 0 20px 48px var(--shadow); }
-    .product-img-placeholder { width: 100%; aspect-ratio: 3/4; background: linear-gradient(160deg, var(--warm), #f0d4de, var(--border)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; color: var(--muted); transition: transform 0.5s; overflow: hidden; }
-    .product-card:hover .product-img-placeholder { transform: scale(1.03); }
-    .product-img-placeholder svg { width: 42px; height: 42px; opacity: 0.25; }
-    .product-img-placeholder span { font-size: 0.68rem; letter-spacing: 0.1em; opacity: 0.45; }
-    .product-badge { position: absolute; top: 1rem; left: 1rem; background: var(--burg); color: white; font-size: 0.56rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.28rem 0.75rem; }
-    .product-badge.gold { background: var(--gold); }
-    .product-info { padding: 1.3rem; }
-    .product-name { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 400; color: var(--dark); margin-bottom: 0.2rem; }
-    .product-cat { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.55rem; }
-    .product-price { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; color: var(--burg); }
-    .product-action { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--border); }
-    .action-link { font-size: 0.66rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--burg); transition: color 0.2s; }
-    .action-wa { width: 32px; height: 32px; border-radius: 50%; background: var(--green-wa); display: flex; align-items: center; justify-content: center; transition: background 0.2s, transform 0.2s; }
-    .action-wa:hover { background: #128c57; transform: scale(1.1); }
-    .action-wa svg { width: 16px; height: 16px; fill: white; }
+    /* CUSTOM CTA */
+    .custom-cta{padding:6.5rem 5%;text-align:center;background:linear-gradient(135deg,var(--burg-dk) 0%,#4a0f20 50%,var(--burg-dk) 100%);position:relative;overflow:hidden;}
+    .custom-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 80%,rgba(201,151,58,.18) 0%,transparent 55%),radial-gradient(ellipse at 70% 20%,rgba(201,151,58,.12) 0%,transparent 50%);}
+    .cta-inner{position:relative;z-index:1;}
+    .custom-cta .section-label{color:var(--gold-sheen);}
+    .custom-cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,4.5vw,3.8rem);font-weight:300;color:var(--white);line-height:1.12;margin-bottom:1.2rem;}
+    .custom-cta-title em{font-style:italic;color:var(--gold-sheen);}
+    .custom-cta-sub{font-size:.9rem;font-weight:300;color:rgba(255,255,255,.6);max-width:520px;margin:0 auto 2.8rem;line-height:1.75;}
+    .custom-cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+    .btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-lt));color:var(--dark);font-family:'Jost',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:1rem 2.6rem;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+    .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,151,58,.4);}
+    .btn-wa-outline{background:transparent;color:rgba(255,255,255,.85);font-family:'Jost',sans-serif;font-size:.75rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;padding:.95rem 2.2rem;border:1.5px solid rgba(255,255,255,.25);cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:.5rem;}
+    .btn-wa-outline:hover{border-color:var(--green-wa);color:var(--green-wa);}
+    .btn-wa-outline svg{width:17px;height:17px;fill:currentColor;}
 
-    .custom-cta { padding: 6.5rem 5%; text-align: center; background: linear-gradient(135deg, var(--burg-dk) 0%, #4a0f20 50%, var(--burg-dk) 100%); position: relative; overflow: hidden; }
-    .custom-cta::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 80%, rgba(201,151,58,0.18) 0%, transparent 55%), radial-gradient(ellipse at 70% 20%, rgba(201,151,58,0.12) 0%, transparent 50%); }
-    .cta-inner { position: relative; z-index: 1; }
-    .custom-cta .section-label { color: var(--gold-sheen); }
-    .custom-cta-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.4rem, 4.5vw, 3.8rem); font-weight: 300; color: var(--white); line-height: 1.12; margin-bottom: 1.2rem; }
-    .custom-cta-title em { font-style: italic; color: var(--gold-sheen); }
-    .custom-cta-sub { font-size: 0.9rem; font-weight: 300; color: rgba(255,255,255,0.6); max-width: 520px; margin: 0 auto 2.8rem; line-height: 1.75; }
-    .custom-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-lt)); color: var(--dark); font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; padding: 1rem 2.6rem; border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
-    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,151,58,0.4); }
-    .btn-wa-outline { background: transparent; color: rgba(255,255,255,0.85); font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; padding: 0.95rem 2.2rem; border: 1.5px solid rgba(255,255,255,0.25); cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 0.5rem; }
-    .btn-wa-outline:hover { border-color: var(--green-wa); color: var(--green-wa); }
-    .btn-wa-outline svg { width: 17px; height: 17px; fill: currentColor; }
+    /* CHATBOT */
+    .chatbot-section{padding:5.5rem 5%;background:var(--cream);}
+    .chatbot-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;max-width:1100px;margin:0 auto;}
+    .chatbot-info .section-title{margin-bottom:1rem;}
+    .chatbot-info>p{font-size:.88rem;color:var(--muted);line-height:1.8;margin-bottom:1.5rem;}
+    .chatbot-steps{margin-top:1.5rem;}
+    .chatbot-step{display:flex;gap:1.1rem;align-items:flex-start;margin-bottom:1.3rem;}
+    .step-num{width:34px;height:34px;flex-shrink:0;border:1.5px solid var(--burg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--burg);}
+    .step-text strong{display:block;font-size:.82rem;color:var(--dark);margin-bottom:.15rem;}
+    .step-text span{font-size:.76rem;color:var(--muted);}
+    .chatbot-container{background:var(--white);border:1px solid var(--border-dk);box-shadow:0 24px 64px var(--shadow);overflow:hidden;min-height:480px;display:flex;flex-direction:column;}
+    .chat-topbar{background:linear-gradient(135deg,var(--burg-dk),var(--burg));padding:1rem 1.5rem;display:flex;align-items:center;gap:.8rem;}
+    .chat-avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .chat-avatar img{width:38px;height:38px;object-fit:cover;border-radius:50%;mix-blend-mode:screen;}
+    .chat-topbar-info strong{display:block;font-size:.8rem;color:white;}
+    .chat-topbar-info span{font-size:.63rem;color:rgba(255,255,255,.6);}
+    .online-dot{width:8px;height:8px;border-radius:50%;background:var(--green-wa);margin-left:auto;box-shadow:0 0 8px var(--green-wa);}
+    .chat-messages{flex:1;padding:1.5rem;background:var(--cream);min-height:300px;position:relative;}
+    .chat-coming-soon{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;background:rgba(253,245,247,.92);}
+    .chat-coming-soon svg{width:48px;height:48px;opacity:.2;}
+    .chat-coming-soon p{font-size:.8rem;color:var(--muted);text-align:center;line-height:1.6;}
+    .chat-coming-soon span{font-size:.62rem;background:var(--burg);color:white;padding:.3rem 1.1rem;letter-spacing:.16em;text-transform:uppercase;}
+    .chat-input-bar{padding:1rem 1.5rem;background:var(--white);border-top:1px solid var(--border);display:flex;gap:.8rem;align-items:center;}
+    .chat-input{flex:1;border:1px solid var(--border-dk);padding:.6rem 1rem;font-family:'Jost',sans-serif;font-size:.8rem;color:var(--muted);background:var(--cream);outline:none;}
+    .chat-send{width:38px;height:38px;background:var(--burg-dk);border:none;opacity:.5;display:flex;align-items:center;justify-content:center;}
 
-    .chatbot-section { padding: 5.5rem 5%; background: var(--cream); }
-    .chatbot-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; max-width: 1100px; margin: 0 auto; }
-    .chatbot-info .section-title { margin-bottom: 1rem; }
-    .chatbot-info > p { font-size: 0.88rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
-    .chatbot-steps { margin-top: 1.5rem; }
-    .chatbot-step { display: flex; gap: 1.1rem; align-items: flex-start; margin-bottom: 1.3rem; }
-    .step-num { width: 34px; height: 34px; flex-shrink: 0; border: 1.5px solid var(--burg); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: var(--burg); }
-    .step-text strong { display: block; font-size: 0.82rem; color: var(--dark); margin-bottom: 0.15rem; }
-    .step-text span { font-size: 0.76rem; color: var(--muted); }
-    .chatbot-container { background: var(--white); border: 1px solid var(--border-dk); box-shadow: 0 24px 64px var(--shadow); overflow: hidden; min-height: 480px; display: flex; flex-direction: column; }
-    .chat-topbar { background: linear-gradient(135deg, var(--burg-dk), var(--burg)); padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
-    .chat-avatar { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .chat-avatar img { width: 38px; height: 38px; object-fit: cover; border-radius: 50%; mix-blend-mode: screen; }
-    .chat-topbar-info strong { display: block; font-size: 0.8rem; color: white; }
-    .chat-topbar-info span { font-size: 0.63rem; color: rgba(255,255,255,0.6); }
-    .online-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green-wa); margin-left: auto; box-shadow: 0 0 8px var(--green-wa); }
-    .chat-messages { flex: 1; padding: 1.5rem; background: var(--cream); min-height: 300px; position: relative; }
-    .chat-coming-soon { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; background: rgba(253,245,247,0.92); }
-    .chat-coming-soon svg { width: 48px; height: 48px; opacity: 0.2; }
-    .chat-coming-soon p { font-size: 0.8rem; color: var(--muted); text-align: center; line-height: 1.6; }
-    .chat-coming-soon span { font-size: 0.62rem; background: var(--burg); color: white; padding: 0.3rem 1.1rem; letter-spacing: 0.16em; text-transform: uppercase; }
-    .chat-input-bar { padding: 1rem 1.5rem; background: var(--white); border-top: 1px solid var(--border); display: flex; gap: 0.8rem; align-items: center; }
-    .chat-input { flex: 1; border: 1px solid var(--border-dk); padding: 0.6rem 1rem; font-family: 'Jost', sans-serif; font-size: 0.8rem; color: var(--muted); background: var(--cream); outline: none; }
-    .chat-send { width: 38px; height: 38px; background: var(--burg-dk); border: none; opacity: 0.5; display: flex; align-items: center; justify-content: center; }
-    .chat-send svg { width: 15px; height: 15px; }
+    /* STORY */
+    .story-section{padding:6rem 5%;background:var(--warm);}
+    .story-inner{display:grid;grid-template-columns:5fr 6fr;gap:5rem;align-items:center;max-width:1100px;margin:0 auto;}
+    .story-img-col{position:relative;}
+    .story-img-frame{width:100%;aspect-ratio:3/4;background:linear-gradient(160deg,#f0d4de,var(--border),var(--warm));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;border:1px solid var(--border-dk);color:var(--muted);}
+    .story-img-frame svg{width:50px;height:50px;opacity:.22;}
+    .story-img-frame p{font-size:.72rem;letter-spacing:.1em;opacity:.5;}
+    .story-img-main{width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid var(--border-dk);}
+    .story-deco{position:absolute;bottom:-1.5rem;right:-1.5rem;width:80%;height:80%;border:1.5px solid var(--burg-soft);z-index:-1;}
+    .story-award-badge{position:absolute;top:1.5rem;right:-1.5rem;background:linear-gradient(135deg,var(--gold),var(--gold-lt));color:var(--dark);padding:1.1rem 1.3rem;text-align:center;box-shadow:0 8px 24px rgba(201,151,58,.4);}
+    .award-icon{font-size:1.5rem;margin-bottom:.3rem;}
+    .award-name{font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;}
+    .story-text .section-title{margin-bottom:1.5rem;}
+    .story-text p{font-size:.9rem;color:var(--muted);line-height:1.85;margin-bottom:1.2rem;}
+    .story-text p.highlight{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:300;font-style:italic;color:var(--burg);border-left:2.5px solid var(--gold-lt);padding-left:1.2rem;}
+    .artisan-sig{margin-top:2rem;display:flex;align-items:center;gap:1rem;}
+    .sig-line{flex:1;height:1px;background:var(--border-dk);}
+    .sig-name{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;font-style:italic;color:var(--burg);}
 
-    .story-section { padding: 6rem 5%; background: var(--warm); }
-    .story-inner { display: grid; grid-template-columns: 5fr 6fr; gap: 5rem; align-items: center; max-width: 1100px; margin: 0 auto; }
-    .story-img-col { position: relative; }
-    .story-img-frame { width: 100%; aspect-ratio: 3/4; background: linear-gradient(160deg, #f0d4de, var(--border), var(--warm)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; border: 1px solid var(--border-dk); color: var(--muted); }
-    .story-img-frame svg { width: 50px; height: 50px; opacity: 0.22; }
-    .story-img-frame p { font-size: 0.72rem; letter-spacing: 0.1em; opacity: 0.5; }
-    .story-deco { position: absolute; bottom: -1.5rem; right: -1.5rem; width: 80%; height: 80%; border: 1.5px solid var(--burg-soft); z-index: -1; }
-    .story-award-badge { position: absolute; top: 1.5rem; right: -1.5rem; background: linear-gradient(135deg, var(--gold), var(--gold-lt)); color: var(--dark); padding: 1.1rem 1.3rem; text-align: center; box-shadow: 0 8px 24px rgba(201,151,58,0.4); }
-    .award-icon { font-size: 1.5rem; margin-bottom: 0.3rem; }
-    .award-name { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
-    .story-text .section-title { margin-bottom: 1.5rem; }
-    .story-text p { font-size: 0.9rem; color: var(--muted); line-height: 1.85; margin-bottom: 1.2rem; }
-    .story-text p.highlight { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--burg); border-left: 2.5px solid var(--gold-lt); padding-left: 1.2rem; }
-    .artisan-sig { margin-top: 2rem; display: flex; align-items: center; gap: 1rem; }
-    .sig-line { flex: 1; height: 1px; background: var(--border-dk); }
-    .sig-name { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; font-style: italic; color: var(--burg); }
+    /* THEMES */
+    .themes-section{padding:5.5rem 5%;background:linear-gradient(135deg,var(--burg-dk) 0%,#3d0e1c 100%);overflow:hidden;}
+    .themes-header{margin-bottom:2.5rem;}
+    .themes-header .section-label{color:var(--gold-sheen);}
+    .themes-header .section-title{color:var(--white);}
+    .themes-scroll{display:flex;gap:1.5rem;overflow-x:auto;padding-bottom:1rem;scrollbar-width:thin;scrollbar-color:var(--burg-soft) transparent;}
+    .theme-card{flex:0 0 215px;aspect-ratio:2/3;background:rgba(255,255,255,.05);border:1px solid rgba(232,201,109,.2);display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;cursor:pointer;transition:border-color .3s,background .3s;position:relative;overflow:hidden;}
+    .theme-card:hover{border-color:var(--gold-sheen);background:rgba(255,255,255,.08);}
+    .theme-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3.5rem;opacity:.2;}
+    .theme-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--white);position:relative;}
+    .theme-origin{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-sheen);margin-top:.25rem;position:relative;}
 
-    .themes-section { padding: 5.5rem 5%; background: linear-gradient(135deg, var(--burg-dk) 0%, #3d0e1c 100%); overflow: hidden; }
-    .themes-header { margin-bottom: 2.5rem; }
-    .themes-header .section-label { color: var(--gold-sheen); }
-    .themes-header .section-title { color: var(--white); }
-    .themes-scroll { display: flex; gap: 1.5rem; overflow-x: auto; padding-bottom: 1rem; scrollbar-width: thin; scrollbar-color: var(--burg-soft) transparent; }
-    .theme-card { flex: 0 0 215px; aspect-ratio: 2/3; background: rgba(255,255,255,0.05); border: 1px solid rgba(232,201,109,0.2); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; cursor: pointer; transition: border-color 0.3s, background 0.3s; position: relative; overflow: hidden; }
-    .theme-card:hover { border-color: var(--gold-sheen); background: rgba(255,255,255,0.08); }
-    .theme-img-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; opacity: 0.2; }
-    .theme-name { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 300; color: var(--white); position: relative; }
-    .theme-origin { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-sheen); margin-top: 0.25rem; position: relative; }
+    /* REVIEWS */
+    .reviews-section{padding:6rem 5%;background:var(--cream);}
+    .reviews-header{text-align:center;margin-bottom:3.5rem;}
+    .reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:1.5rem;}
+    .review-card{background:var(--white);border:1px solid var(--border-dk);padding:2rem;position:relative;transition:transform .3s,box-shadow .3s;border-top:3px solid var(--burg);}
+    .review-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px var(--shadow);}
+    .review-quote{font-family:'Cormorant Garamond',serif;font-size:3.5rem;color:var(--border-dk);line-height:.8;margin-bottom:1rem;}
+    .review-text{font-size:.87rem;color:var(--muted);line-height:1.78;margin-bottom:1.5rem;font-style:italic;}
+    .review-stars{color:var(--gold-lt);font-size:.82rem;margin-bottom:1rem;}
+    .review-footer{display:flex;align-items:center;gap:.8rem;}
+    .review-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--warm),var(--border));border:1.5px solid var(--burg-soft);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--burg);flex-shrink:0;}
+    .reviewer-name{font-size:.8rem;font-weight:500;color:var(--dark);}
+    .reviewer-loc{font-size:.63rem;color:var(--muted);}
+    .reviews-add{text-align:center;margin-top:2.5rem;}
+    .reviews-add p{font-size:.82rem;color:var(--muted);margin-bottom:1rem;}
 
-    .reviews-section { padding: 6rem 5%; background: var(--cream); }
-    .reviews-header { text-align: center; margin-bottom: 3.5rem; }
-    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(285px, 1fr)); gap: 1.5rem; }
-    .review-card { background: var(--white); border: 1px solid var(--border-dk); padding: 2rem; position: relative; transition: transform 0.3s, box-shadow 0.3s; border-top: 3px solid var(--burg); }
-    .review-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px var(--shadow); }
-    .review-quote { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; color: var(--border-dk); line-height: 0.8; margin-bottom: 1rem; }
-    .review-text { font-size: 0.87rem; color: var(--muted); line-height: 1.78; margin-bottom: 1.5rem; font-style: italic; }
-    .review-stars { color: var(--gold-lt); font-size: 0.82rem; margin-bottom: 1rem; }
-    .review-footer { display: flex; align-items: center; gap: 0.8rem; }
-    .review-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--warm), var(--border)); border: 1.5px solid var(--burg-soft); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--burg); }
-    .reviewer-name { font-size: 0.8rem; font-weight: 500; color: var(--dark); }
-    .reviewer-loc { font-size: 0.63rem; color: var(--muted); }
-    .reviews-add { text-align: center; margin-top: 2.5rem; }
-    .reviews-add p { font-size: 0.82rem; color: var(--muted); margin-bottom: 1rem; }
+    /* SHIPPING */
+    .shipping-bar{background:var(--warm);padding:2.8rem 5%;display:flex;justify-content:center;gap:4rem;flex-wrap:wrap;border-top:1px solid var(--border-dk);border-bottom:1px solid var(--border-dk);}
+    .ship-item{display:flex;align-items:center;gap:1rem;}
+    .ship-icon{width:46px;height:46px;border:1.5px solid var(--burg-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--white);}
+    .ship-icon svg{width:20px;height:20px;stroke:var(--burg);fill:none;stroke-width:1.5;}
+    .ship-label{font-size:.7rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--dark);}
+    .ship-sub{font-size:.72rem;color:var(--muted);margin-top:.15rem;}
 
-    .shipping-bar { background: var(--warm); padding: 2.8rem 5%; display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap; border-top: 1px solid var(--border-dk); border-bottom: 1px solid var(--border-dk); }
-    .ship-item { display: flex; align-items: center; gap: 1rem; }
-    .ship-icon { width: 46px; height: 46px; border: 1.5px solid var(--burg-soft); display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--white); }
-    .ship-icon svg { width: 20px; height: 20px; stroke: var(--burg); fill: none; stroke-width: 1.5; }
-    .ship-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--dark); }
-    .ship-sub { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; }
+    /* FOOTER */
+    footer{background:var(--dark);padding:4.5rem 5% 2rem;color:rgba(255,255,255,.5);}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;margin-bottom:3rem;}
+    .footer-logo{height:70px;width:auto;mix-blend-mode:screen;margin-bottom:1rem;}
+    .footer-brand p{font-size:.78rem;line-height:1.75;color:rgba(255,255,255,.4);margin-bottom:1.2rem;}
+    .footer-award{font-size:.65rem;color:var(--gold-sheen);letter-spacing:.1em;margin-bottom:1.2rem;}
+    .footer-social{display:flex;gap:.8rem;}
+    .social-btn{width:36px;height:36px;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,background .2s;}
+    .social-btn:hover{border-color:var(--burg-soft);background:rgba(156,38,69,.2);}
+    .social-btn svg{width:15px;height:15px;fill:rgba(255,255,255,.5);}
+    .footer-col h4{font-size:.65rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-sheen);margin-bottom:1.3rem;}
+    .footer-col ul li{margin-bottom:.65rem;}
+    .footer-col ul li a{font-size:.8rem;color:rgba(255,255,255,.42);transition:color .2s;}
+    .footer-col ul li a:hover{color:var(--burg-soft);}
+    .footer-contact-item{display:flex;gap:.75rem;align-items:flex-start;margin-bottom:.9rem;}
+    .footer-contact-item svg{width:15px;height:15px;flex-shrink:0;opacity:.45;margin-top:2px;}
+    .footer-contact-item span{font-size:.78rem;line-height:1.55;}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:1.8rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+    .footer-bottom p{font-size:.68rem;}
+    .footer-bottom a{color:var(--burg-soft);}
 
-    footer { background: var(--dark); padding: 4.5rem 5% 2rem; color: rgba(255,255,255,0.5); }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 3rem; margin-bottom: 3rem; }
-    .footer-logo { height: 70px; width: auto; mix-blend-mode: screen; margin-bottom: 1rem; }
-    .footer-brand p { font-size: 0.78rem; line-height: 1.75; color: rgba(255,255,255,0.4); margin-bottom: 1.2rem; }
-    .footer-award { font-size: 0.65rem; color: var(--gold-sheen); letter-spacing: 0.1em; margin-bottom: 1.2rem; }
-    .footer-social { display: flex; gap: 0.8rem; }
-    .social-btn { width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
-    .social-btn:hover { border-color: var(--burg-soft); background: rgba(156,38,69,0.2); }
-    .social-btn svg { width: 15px; height: 15px; fill: rgba(255,255,255,0.5); }
-    .footer-col h4 { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-sheen); margin-bottom: 1.3rem; }
-    .footer-col ul li { margin-bottom: 0.65rem; }
-    .footer-col ul li a { font-size: 0.8rem; color: rgba(255,255,255,0.42); transition: color 0.2s; }
-    .footer-col ul li a:hover { color: var(--burg-soft); }
-    .footer-contact-item { display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 0.9rem; }
-    .footer-contact-item svg { width: 15px; height: 15px; flex-shrink: 0; opacity: 0.45; margin-top: 2px; }
-    .footer-contact-item span { font-size: 0.78rem; line-height: 1.55; }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1.8rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-    .footer-bottom p { font-size: 0.68rem; }
-    .footer-bottom a { color: var(--burg-soft); }
+    .float-wa{position:fixed;bottom:1.5rem;right:1.5rem;z-index:998;width:56px;height:56px;border-radius:50%;background:var(--green-wa);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.45);transition:transform .25s,box-shadow .25s;}
+    .float-wa:hover{transform:scale(1.1);box-shadow:0 8px 28px rgba(37,211,102,.55);}
+    .float-wa svg{width:28px;height:28px;fill:white;}
 
-    .float-wa { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 998; width: 56px; height: 56px; border-radius: 50%; background: var(--green-wa); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.45); transition: transform 0.25s, box-shadow 0.25s; }
-    .float-wa:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(37,211,102,0.55); }
-    .float-wa svg { width: 28px; height: 28px; fill: white; }
+    @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;}.footer-brand{grid-column:1/-1;}}
+    @media(max-width:768px){.nav-links{display:none;}.hamburger{display:flex;}.hero{grid-template-columns:1fr;}.hero-right{min-height:360px;}.hero-stats{gap:1.5rem;}.chatbot-wrapper,.story-inner{grid-template-columns:1fr;gap:2.5rem;}.story-deco,.story-award-badge{display:none;}.collections-header{flex-direction:column;align-items:flex-start;gap:1rem;}.shipping-bar{gap:2rem;}.footer-grid{grid-template-columns:1fr;}}
 
-    @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1/-1; } }
-    @media (max-width: 768px) { .nav-links { display: none; } .hamburger { display: flex; } .hero { grid-template-columns: 1fr; } .hero-right { min-height: 360px; } .hero-stats { gap: 1.5rem; } .chatbot-wrapper, .story-inner { grid-template-columns: 1fr; gap: 2.5rem; } .story-deco, .story-award-badge { display: none; } .collections-header { flex-direction: column; align-items: flex-start; gap: 1rem; } .shipping-bar { gap: 2rem; } .footer-grid { grid-template-columns: 1fr; } }
-
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
-    .hero-award  { animation: fadeUp 0.6s 0s   ease both; }
-    .hero-title  { animation: fadeUp 0.7s 0.1s ease both; }
-    .hero-sub    { animation: fadeUp 0.7s 0.2s ease both; }
-    .hero-btns   { animation: fadeUp 0.7s 0.3s ease both; }
-    .hero-stats  { animation: fadeUp 0.7s 0.4s ease both; }
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: var(--cream); }
-    ::-webkit-scrollbar-thumb { background: var(--border-dk); }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+    .hero-award{animation:fadeUp .6s 0s ease both;}
+    .hero-title{animation:fadeUp .7s .1s ease both;}
+    .hero-sub{animation:fadeUp .7s .2s ease both;}
+    .hero-btns{animation:fadeUp .7s .3s ease both;}
+    .hero-stats{animation:fadeUp .7s .4s ease both;}
+    ::-webkit-scrollbar{width:6px;height:6px;}
+    ::-webkit-scrollbar-track{background:var(--cream);}
+    ::-webkit-scrollbar-thumb{background:var(--border-dk);}
   </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav id="navbar">
-  <div class="nav-logo">
-    <img src="logo.png" alt="My Creation – Handmade Jewellery" />
-  </div>
+  <div class="nav-logo"><img src="logo.png" alt="My Creation" /></div>
   <ul class="nav-links">
     <li><a href="#collections">Shop</a></li>
     <li><a href="#themes">Collections</a></li>
@@ -260,11 +259,10 @@
     <li><a href="#reviews">Reviews</a></li>
     <li><a href="#custom-order" class="nav-cta">✦ Custom Order</a></li>
   </ul>
-  <div class="hamburger" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
-  </div>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
 </nav>
 
+<!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-deco-top"></div>
   <div class="hero-left">
@@ -272,22 +270,22 @@
       <svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
       Ananya Award Winner — Smitarani Mishra
     </div>
-    <h1 class="hero-title">Jewellery Designed<br/>for <em>Your</em> Occasion</h1>
-    <p class="hero-sub">Each piece is handcrafted with love, tradition, and an artistic soul — made to match your outfit, your culture, and your celebration.</p>
+    <h1 class="hero-title" id="heroTitleEl">Jewellery Designed<br/>for <em>Your</em> Occasion</h1>
+    <p class="hero-sub" id="heroSubEl">Each piece is handcrafted with love, tradition, and an artistic soul — made to match your outfit, your culture, and your celebration.</p>
     <div class="hero-btns">
       <a href="#custom-order" class="btn-primary">✦ Start Custom Order</a>
       <a href="#collections" class="btn-outline">Browse Designs</a>
     </div>
     <div class="hero-stats">
-      <div><div class="stat-num">500+</div><div class="stat-label">Happy Clients</div></div>
-      <div><div class="stat-num">8+</div><div class="stat-label">Years of Craft</div></div>
-      <div><div class="stat-num">100%</div><div class="stat-label">Handmade</div></div>
+      <div><div class="stat-num" id="stat1El">500+</div><div class="stat-label" id="stat1lEl">Happy Clients</div></div>
+      <div><div class="stat-num" id="stat2El">8+</div><div class="stat-label" id="stat2lEl">Years of Craft</div></div>
+      <div><div class="stat-num" id="stat3El">100%</div><div class="stat-label" id="stat3lEl">Handmade</div></div>
     </div>
   </div>
-  <div class="hero-right">
-    <div class="hero-img-placeholder">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-      <p>Hero Image — Upload in Admin</p>
+  <div class="hero-right" id="heroRightEl">
+    <div class="hero-img-placeholder" id="heroImgPlaceholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width=".8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      <p>Hero Image — Set in Admin</p>
     </div>
     <div class="hero-overlay-badge">
       <div class="badge-text">✦ Handcrafted with Soul</div>
@@ -296,6 +294,7 @@
   </div>
 </section>
 
+<!-- MARQUEE -->
 <div class="marquee-bar">
   <div class="marquee-track">
     <span class="marquee-item">Handcrafted Jewellery</span><span class="marquee-item marquee-dot"> ✦ </span>
@@ -313,6 +312,7 @@
   </div>
 </div>
 
+<!-- CATEGORIES -->
 <section class="categories">
   <div class="cat-header"><div class="section-label">Browse By</div><div class="section-title">Shop By Category</div></div>
   <div class="cat-grid">
@@ -325,41 +325,16 @@
   </div>
 </section>
 
+<!-- PRODUCTS — rendered by JS -->
 <section class="collections" id="collections">
   <div class="collections-header">
     <div><div class="section-label">Ready To Ship</div><div class="section-title">Featured Designs</div></div>
     <a href="#" class="btn-outline">View All Designs</a>
   </div>
-  <div class="collections-grid">
-    <div class="product-card">
-      <div class="product-badge">New</div>
-      <div class="product-img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span>Product Image</span></div>
-      <div class="product-info"><div class="product-cat">Earrings · Assamese</div><div class="product-name">Traditional Jhumka Pair</div><div class="product-price">₹ —</div>
-        <div class="product-action"><span class="action-link">View Details →</span><a href="https://wa.me/91XXXXXXXXXX" class="action-wa" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.531 5.856L.057 23.25a.75.75 0 0 0 .921.919l5.487-1.472A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.498-5.24-1.37l-.375-.214-3.888 1.042 1.059-3.766-.232-.39A9.953 9.953 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></a></div>
-      </div>
-    </div>
-    <div class="product-card">
-      <div class="product-img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span>Product Image</span></div>
-      <div class="product-info"><div class="product-cat">Necklace · Sambalpuri</div><div class="product-name">Sambalpuri Beaded Haar</div><div class="product-price">₹ —</div>
-        <div class="product-action"><span class="action-link">View Details →</span><a href="https://wa.me/91XXXXXXXXXX" class="action-wa" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.531 5.856L.057 23.25a.75.75 0 0 0 .921.919l5.487-1.472A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.498-5.24-1.37l-.375-.214-3.888 1.042 1.059-3.766-.232-.39A9.953 9.953 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></a></div>
-      </div>
-    </div>
-    <div class="product-card">
-      <div class="product-badge gold">Bestseller</div>
-      <div class="product-img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span>Product Image</span></div>
-      <div class="product-info"><div class="product-cat">Full Set · Bridal</div><div class="product-name">Wedding Bridal Set</div><div class="product-price">₹ —</div>
-        <div class="product-action"><span class="action-link">View Details →</span><a href="https://wa.me/91XXXXXXXXXX" class="action-wa" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.531 5.856L.057 23.25a.75.75 0 0 0 .921.919l5.487-1.472A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.498-5.24-1.37l-.375-.214-3.888 1.042 1.059-3.766-.232-.39A9.953 9.953 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></a></div>
-      </div>
-    </div>
-    <div class="product-card">
-      <div class="product-img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span>Product Image</span></div>
-      <div class="product-info"><div class="product-cat">Potli Bag · Embroidered</div><div class="product-name">Silk Potli Bag</div><div class="product-price">₹ —</div>
-        <div class="product-action"><span class="action-link">View Details →</span><a href="https://wa.me/91XXXXXXXXXX" class="action-wa" target="_blank"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.531 5.856L.057 23.25a.75.75 0 0 0 .921.919l5.487-1.472A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.498-5.24-1.37l-.375-.214-3.888 1.042 1.059-3.766-.232-.39A9.953 9.953 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></a></div>
-      </div>
-    </div>
-  </div>
+  <div class="collections-grid" id="productsGrid"></div>
 </section>
 
+<!-- CUSTOM ORDER CTA -->
 <section class="custom-cta" id="custom-order">
   <div class="cta-inner">
     <div class="section-label">Made Just For You</div>
@@ -367,7 +342,7 @@
     <p class="custom-cta-sub">Share your occasion, outfit, and vision — Smitarani will craft a piece that feels like it was always meant to be yours.</p>
     <div class="custom-cta-btns">
       <button class="btn-gold" onclick="document.getElementById('chatbot-area').scrollIntoView({behavior:'smooth'})">✦ Start Custom Order Chat</button>
-      <a href="https://wa.me/91XXXXXXXXXX?text=Hi!%20I%20want%20a%20custom%20jewellery%20order." target="_blank" class="btn-wa-outline">
+      <a id="waCtaBtn" href="https://wa.me/91XXXXXXXXXX?text=Hi!%20I%20want%20a%20custom%20jewellery%20order." target="_blank" class="btn-wa-outline">
         <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.531 5.856L.057 23.25a.75.75 0 0 0 .921.919l5.487-1.472A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.498-5.24-1.37l-.375-.214-3.888 1.042 1.059-3.766-.232-.39A9.953 9.953 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
         Order on WhatsApp
       </a>
@@ -375,6 +350,7 @@
   </div>
 </section>
 
+<!-- CHATBOT -->
 <section class="chatbot-section" id="chatbot-area">
   <div class="chatbot-wrapper">
     <div class="chatbot-info">
@@ -387,7 +363,7 @@
         <div class="chatbot-step"><div class="step-num">3</div><div class="step-text"><strong>Advance Payment to Confirm</strong><span>30–50% advance secures your order and materials</span></div></div>
         <div class="chatbot-step"><div class="step-num">4</div><div class="step-text"><strong>Handcrafted &amp; Delivered</strong><span>Balance on completion · Shipped via DTDC / SkyKing</span></div></div>
       </div>
-      <p style="font-size:0.74rem;color:var(--muted);margin-top:1.3rem;border-left:2.5px solid var(--gold-lt);padding-left:0.9rem;line-height:1.65;">Since each piece is handmade and customised, orders are confirmed only after advance payment — ensuring fair work for our artisan.</p>
+      <p style="font-size:.74rem;color:var(--muted);margin-top:1.3rem;border-left:2.5px solid var(--gold-lt);padding-left:.9rem;line-height:1.65;">Since each piece is handmade and customised, orders are confirmed only after advance payment — ensuring fair work for our artisan.</p>
     </div>
     <div class="chatbot-container" id="chatbot-embed-target">
       <div class="chat-topbar">
@@ -410,46 +386,48 @@
   </div>
 </section>
 
+<!-- THEMES — rendered by JS -->
 <section class="themes-section" id="themes">
   <div class="themes-header"><div class="section-label">Explore</div><div class="section-title">Our Collections</div></div>
-  <div class="themes-scroll">
-    <div class="theme-card"><div class="theme-img-placeholder">🏮</div><div class="theme-name">Assamese</div><div class="theme-origin">Northeast India</div></div>
-    <div class="theme-card"><div class="theme-img-placeholder">🌸</div><div class="theme-name">Sambalpuri</div><div class="theme-origin">Western Odisha</div></div>
-    <div class="theme-card"><div class="theme-img-placeholder">🌺</div><div class="theme-name">Bengali</div><div class="theme-origin">East India</div></div>
-    <div class="theme-card"><div class="theme-img-placeholder">🌙</div><div class="theme-name">Arabian</div><div class="theme-origin">Inspired by Arabia</div></div>
-    <div class="theme-card"><div class="theme-img-placeholder">🍃</div><div class="theme-name">Boho</div><div class="theme-origin">Free Spirit Style</div></div>
-  </div>
+  <div class="themes-scroll" id="themesGrid"></div>
 </section>
 
+<!-- STORY -->
 <section class="story-section" id="story">
   <div class="story-inner">
     <div class="story-img-col">
-      <div class="story-img-frame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><p>Artisan Photo — Upload in Admin</p></div>
+      <div id="artisanImgWrap">
+        <div class="story-img-frame" id="artisanPlaceholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width=".8" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <p>Artisan Photo — Set in Admin</p>
+        </div>
+      </div>
       <div class="story-deco"></div>
       <div class="story-award-badge"><div class="award-icon">🏆</div><div class="award-name">Ananya<br/>Award</div></div>
     </div>
     <div class="story-text">
       <div class="section-label">The Artisan</div>
       <h2 class="section-title">The Story Behind<br/>Every Piece</h2>
-      <p class="highlight">"Every wall frame, every painting, every shelf in our home — she made it all with her own hands, with a beautiful touch." — Smitarani's mother</p>
-      <p>Smitarani Mishra's love for art and craft began in childhood — a spark so natural that everything she touched became beautiful. Long before it was a business, it was simply who she was.</p>
-      <p>She began by making jewellery for herself, quietly and joyfully. When her friends noticed — and began asking her to make pieces for them — the love spread. Word after word, piece after piece, what began as a personal hobby turned into something that touched the lives of hundreds of women across India.</p>
-      <p>Today, Smitarani's creations are not just jewellery — they are wearable art, each one carrying the warmth of the hands that made them. Her work has been recognised with the prestigious <strong style="color:var(--burg)">Ananya Award</strong>, a testament to her craft and her heart.</p>
+      <p class="highlight" id="storyQuoteEl">"Every wall frame, every painting, every shelf in our home — she made it all with her own hands, with a beautiful touch." — Smitarani's mother</p>
+      <p id="storyP1El">Smitarani Mishra's love for art and craft began in childhood — a spark so natural that everything she touched became beautiful. Long before it was a business, it was simply who she was.</p>
+      <p id="storyP2El">She began by making jewellery for herself, quietly and joyfully. When her friends noticed — and began asking her to make pieces for them — the love spread. Word after word, piece after piece, what began as a personal hobby turned into something that touched the lives of hundreds of women across India.</p>
+      <p id="storyP3El">Today, Smitarani's creations are not just jewellery — they are wearable art, each one carrying the warmth of the hands that made them. Her work has been recognised with the prestigious <strong style="color:var(--burg)">Ananya Award</strong>, a testament to her craft and her heart.</p>
       <div class="artisan-sig"><div class="sig-line"></div><div class="sig-name">Smitarani Mishra</div><div class="sig-line"></div></div>
     </div>
   </div>
 </section>
 
+<!-- REVIEWS — rendered by JS -->
 <section class="reviews-section" id="reviews">
   <div class="reviews-header"><div class="section-label">What They Say</div><h2 class="section-title">Stories from Our Customers</h2></div>
-  <div class="reviews-grid">
-    <div class="review-card"><div class="review-quote">"</div><div class="review-stars">★★★★★</div><p class="review-text">I ordered a custom set for my wedding reception and it was beyond my expectations. Smitarani understood my vision perfectly and the craftsmanship was exquisite. Every guest asked where I got it from!</p><div class="review-footer"><div class="review-avatar">P</div><div><div class="reviewer-name">Priya Sharma</div><div class="reviewer-loc">Delhi · Wedding Order</div></div></div></div>
-    <div class="review-card"><div class="review-quote">"</div><div class="review-stars">★★★★★</div><p class="review-text">The Sambalpuri earrings I got are absolutely stunning. You can feel the love and care in every bead. Truly handmade with soul. Will definitely order again!</p><div class="review-footer"><div class="review-avatar">A</div><div><div class="reviewer-name">Ankita Das</div><div class="reviewer-loc">Bhubaneswar · Ready-Made</div></div></div></div>
-    <div class="review-card"><div class="review-quote">"</div><div class="review-stars">★★★★★</div><p class="review-text">Got a custom potli bag and necklace set for my sister's engagement. The process was so smooth — she shared photos at every step. The result was just magical. Worth every rupee!</p><div class="review-footer"><div class="review-avatar">M</div><div><div class="reviewer-name">Meenakshi Nair</div><div class="reviewer-loc">Kochi · Custom Order</div></div></div></div>
+  <div class="reviews-grid" id="reviewsGrid"></div>
+  <div class="reviews-add">
+    <p>Happy with your purchase? We'd love to hear from you.</p>
+    <a id="waReviewBtn" href="https://wa.me/91XXXXXXXXXX" target="_blank" class="btn-outline">Share Your Experience</a>
   </div>
-  <div class="reviews-add"><p>Happy with your purchase? We'd love to hear from you.</p><a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="btn-outline">Share Your Experience</a></div>
 </section>
 
+<!-- SHIPPING -->
 <div class="shipping-bar">
   <div class="ship-item"><div class="ship-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><div><div class="ship-label">Pan India Delivery</div><div class="ship-sub">DTDC · SkyKing Courier</div></div></div>
   <div class="ship-item"><div class="ship-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="ship-label">Secure Packaging</div><div class="ship-sub">Every piece wrapped with care</div></div></div>
@@ -457,56 +435,250 @@
   <div class="ship-item"><div class="ship-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div><div class="ship-label">100% Handmade</div><div class="ship-sub">Made with love &amp; tradition</div></div></div>
 </div>
 
+<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
       <img src="logo.png" alt="My Creation" class="footer-logo" />
-      <p>Handcrafted jewellery by Smitarani Mishra — where art, tradition, and love come together in every single piece.</p>
+      <p id="footerTagEl">Handcrafted jewellery by Smitarani Mishra — where art, tradition, and love come together in every single piece.</p>
       <p class="footer-award">🏆 Ananya Award Winner</p>
       <div class="footer-social">
-        <div class="social-btn"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
-        <div class="social-btn"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div>
-        <div class="social-btn"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.531 5.856L.057 23.25a.75.75 0 0 0 .921.919l5.487-1.472A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.498-5.24-1.37l-.375-.214-3.888 1.042 1.059-3.766-.232-.39A9.953 9.953 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></div>
+        <a id="instaLinkEl" href="#" target="_blank" class="social-btn"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        <a id="fbLinkEl" href="#" target="_blank" class="social-btn"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a id="waFooterBtn" href="#" target="_blank" class="social-btn"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.531 5.856L.057 23.25a.75.75 0 0 0 .921.919l5.487-1.472A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.498-5.24-1.37l-.375-.214-3.888 1.042 1.059-3.766-.232-.39A9.953 9.953 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></a>
       </div>
     </div>
     <div class="footer-col"><h4>Shop</h4><ul><li><a href="#collections">Earrings</a></li><li><a href="#collections">Necklaces</a></li><li><a href="#collections">Full Sets</a></li><li><a href="#collections">Potli Bags</a></li><li><a href="#collections">New Arrivals</a></li></ul></div>
     <div class="footer-col"><h4>Information</h4><ul><li><a href="#story">About Smitarani</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#custom-order">Custom Orders</a></li><li><a href="#">Shipping Policy</a></li><li><a href="#">Order Process</a></li><li><a href="#">Cancellation Policy</a></li></ul></div>
     <div class="footer-col"><h4>Contact</h4>
-      <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.06 6.06l1.67-1.67a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>+91 XXXXXXXXXX<br/><span style="font-size:0.6rem;opacity:0.4;">Update in Admin Panel</span></span></div>
-      <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>mycreation@email.com<br/><span style="font-size:0.6rem;opacity:0.4;">Update in Admin Panel</span></span></div>
-      <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Bhubaneswar, Odisha · India</span></div>
+      <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.06 6.06l1.67-1.67a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span id="footerPhoneEl">+91 XXXXXXXXXX</span></div>
+      <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span id="footerEmailEl">mycreation@email.com</span></div>
+      <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span id="footerCityEl">Bhubaneswar, Odisha · India</span></div>
     </div>
   </div>
   <div class="footer-bottom">
     <p>© 2025 My Creation by Smitarani Mishra. All rights reserved.</p>
-    <p><a href="#">Privacy Policy</a> · <a href="#">Terms</a> · <a href="/admin-login.html">Admin Login 🔐</a></p>
+    <p><a href="#">Privacy Policy</a> · <a href="#">Terms</a> · <a href="admin.html">Admin Login 🔐</a></p>
   </div>
 </footer>
 
-<a href="https://wa.me/91XXXXXXXXXX?text=Hi!%20I%20am%20interested%20in%20your%20jewellery." target="_blank" class="float-wa">
+<!-- FLOATING WA -->
+<a id="floatWaBtn" href="https://wa.me/91XXXXXXXXXX?text=Hi!%20I%20am%20interested%20in%20your%20jewellery." target="_blank" class="float-wa">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.531 5.856L.057 23.25a.75.75 0 0 0 .921.919l5.487-1.472A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.498-5.24-1.37l-.375-.214-3.888 1.042 1.059-3.766-.232-.39A9.953 9.953 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
 </a>
 
 <script>
-  window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20); });
-  let menuOpen = false;
-  function toggleMenu() {
-    menuOpen = !menuOpen;
-    const links = document.querySelector('.nav-links');
-    if (menuOpen) {
-      Object.assign(links.style, { display:'flex', flexDirection:'column', gap:'0', position:'fixed', top:'76px', left:'0', right:'0', bottom:'0', background:'var(--cream)', padding:'2rem', borderTop:'1px solid var(--border-dk)', zIndex:'998' });
-      links.querySelectorAll('a').forEach(a => Object.assign(a.style, { padding:'1rem 0', fontSize:'1rem', borderBottom:'1px solid var(--border)' }));
-    } else {
-      links.removeAttribute('style');
-      links.querySelectorAll('a').forEach(a => a.removeAttribute('style'));
+// ─── WA ICON SVG ────────────────────────────────────────────────────────────
+const WA_SVG = `<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.121 1.531 5.856L.057 23.25a.75.75 0 0 0 .921.919l5.487-1.472A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.693-.498-5.24-1.37l-.375-.214-3.888 1.042 1.059-3.766-.232-.39A9.953 9.953 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>`;
+
+// ─── DEFAULT DATA (fallback if nothing saved yet) ────────────────────────────
+const DEFAULTS = {
+  hero:{ line1:'Jewellery Designed', line2:"for Your Occasion", sub:"Each piece is handcrafted with love, tradition, and an artistic soul — made to match your outfit, your culture, and your celebration.", stat1:'500+',stat1l:'Happy Clients',stat2:'8+',stat2l:'Years of Craft',stat3:'100%',stat3l:'Handmade' },
+  story:{ quote:'"Every wall frame, every painting, every shelf in our home — she made it all with her own hands, with a beautiful touch." — Smitarani\'s mother', p1:"Smitarani Mishra's love for art and craft began in childhood — a spark so natural that everything she touched became beautiful. Long before it was a business, it was simply who she was.", p2:"She began by making jewellery for herself, quietly and joyfully. When her friends noticed — and began asking her to make pieces for them — the love spread. Word after word, piece after piece, what began as a personal hobby turned into something that touched the lives of hundreds of women across India.", p3:"Today, Smitarani's creations are not just jewellery — they are wearable art, each one carrying the warmth of the hands that made them. Her work has been recognised with the prestigious Ananya Award, a testament to her craft and her heart." },
+  contact:{ wa:'+91XXXXXXXXXX', email:'mycreation@email.com', phone:'+91 XXXXXXXXXX', city:'Bhubaneswar, Odisha · India', insta:'#', fb:'#', footerTag:"Handcrafted jewellery by Smitarani Mishra — where art, tradition, and love come together in every single piece." },
+  products:[
+    {name:'Traditional Jhumka Pair', cat:'Earrings · Assamese', price:'', badge:'New', img:''},
+    {name:'Sambalpuri Beaded Haar',  cat:'Necklace · Sambalpuri', price:'', badge:'', img:''},
+    {name:'Wedding Bridal Set',      cat:'Full Set · Bridal', price:'', badge:'Bestseller', img:''},
+    {name:'Silk Potli Bag',          cat:'Potli Bag · Embroidered', price:'', badge:'', img:''}
+  ],
+  reviews:[
+    {name:'Priya Sharma', loc:'Delhi · Wedding Order', text:'I ordered a custom set for my wedding reception and it was beyond my expectations. Smitarani understood my vision perfectly and the craftsmanship was exquisite. Every guest asked where I got it from!', stars:'5'},
+    {name:'Ankita Das', loc:'Bhubaneswar · Ready-Made', text:'The Sambalpuri earrings I got are absolutely stunning. You can feel the love and care in every bead. Truly handmade with soul. Will definitely order again!', stars:'5'},
+    {name:'Meenakshi Nair', loc:'Kochi · Custom Order', text:"Got a custom potli bag and necklace set for my sister's engagement. The process was so smooth — she shared photos at every step. The result was just magical. Worth every rupee!", stars:'5'}
+  ],
+  collections:[
+    {name:'Assamese', origin:'Northeast India', emoji:'🏮'},
+    {name:'Sambalpuri', origin:'Western Odisha', emoji:'🌸'},
+    {name:'Bengali', origin:'East India', emoji:'🌺'},
+    {name:'Arabian', origin:'Inspired by Arabia', emoji:'🌙'},
+    {name:'Boho', origin:'Free Spirit Style', emoji:'🍃'}
+  ]
+};
+
+// ─── LOAD DATA ───────────────────────────────────────────────────────────────
+function loadData() {
+  try {
+    const saved = localStorage.getItem('mc_site_data');
+    return saved ? JSON.parse(saved) : DEFAULTS;
+  } catch { return DEFAULTS; }
+}
+
+// ─── APPLY HERO ──────────────────────────────────────────────────────────────
+function applyHero(h) {
+  if (!h) return;
+  // Title: line1 + italic line2
+  const titleEl = document.getElementById('heroTitleEl');
+  if (titleEl) titleEl.innerHTML = (h.line1||'') + '<br/>for <em>' + ((h.line2||'').replace(/^for /i,'') || 'Your Occasion') + '</em>';
+  setText('heroSubEl', h.sub);
+  setText('stat1El', h.stat1); setText('stat1lEl', h.stat1l);
+  setText('stat2El', h.stat2); setText('stat2lEl', h.stat2l);
+  setText('stat3El', h.stat3); setText('stat3lEl', h.stat3l);
+  // Hero image
+  const heroImg = localStorage.getItem('mc_heroImg');
+  if (heroImg) {
+    const placeholder = document.getElementById('heroImgPlaceholder');
+    if (placeholder) {
+      const img = document.createElement('img');
+      img.src = heroImg;
+      img.className = 'hero-img-main';
+      placeholder.replaceWith(img);
     }
   }
-  const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } }); }, { threshold: 0.08 });
-  document.querySelectorAll('.product-card, .review-card, .cat-card, .theme-card, .chatbot-step').forEach((el, i) => {
+}
+
+// ─── APPLY STORY ─────────────────────────────────────────────────────────────
+function applyStory(s) {
+  if (!s) return;
+  setText('storyQuoteEl', s.quote);
+  setText('storyP1El', s.p1);
+  setText('storyP2El', s.p2);
+  // p3 has a bold span — rebuild it
+  const p3 = document.getElementById('storyP3El');
+  if (p3 && s.p3) p3.innerHTML = s.p3.replace('Ananya Award', '<strong style="color:var(--burg)">Ananya Award</strong>');
+  // Artisan portrait
+  const artisanImg = localStorage.getItem('mc_artisanImg');
+  if (artisanImg) {
+    const wrap = document.getElementById('artisanImgWrap');
+    if (wrap) wrap.innerHTML = `<img src="${artisanImg}" class="story-img-main" />`;
+  }
+}
+
+// ─── APPLY CONTACT ───────────────────────────────────────────────────────────
+function applyContact(c) {
+  if (!c) return;
+  const waNum = (c.wa||'').replace(/\D/g,'');
+  const waUrl = n => `https://wa.me/${n}?text=Hi!%20I%20am%20interested%20in%20your%20jewellery.`;
+  const setHref = (id, url) => { const el = document.getElementById(id); if(el) el.href = url; };
+  setHref('waCtaBtn',    `https://wa.me/${waNum}?text=Hi!%20I%20want%20a%20custom%20jewellery%20order.`);
+  setHref('floatWaBtn',  waUrl(waNum));
+  setHref('waReviewBtn', `https://wa.me/${waNum}?text=I'd%20love%20to%20share%20my%20review!`);
+  setHref('waFooterBtn', waUrl(waNum));
+  setHref('instaLinkEl', c.insta||'#');
+  setHref('fbLinkEl', c.fb||'#');
+  setText('footerTagEl',   c.footerTag);
+  setText('footerPhoneEl', c.phone);
+  setText('footerEmailEl', c.email);
+  setText('footerCityEl',  c.city);
+}
+
+// ─── RENDER PRODUCTS ─────────────────────────────────────────────────────────
+function renderProducts(products) {
+  const grid = document.getElementById('productsGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  (products || []).forEach(p => {
+    const waNum = (loadData().contact?.wa||'91XXXXXXXXXX').replace(/\D/g,'');
+    const waMsg = encodeURIComponent(`Hi! I am interested in ${p.name}`);
+    const badgeClass = p.badge === 'Bestseller' ? 'product-badge gold-badge' : 'product-badge';
+    const imgHtml = p.img
+      ? `<div class="product-img-wrap"><img src="${p.img}" alt="${p.name}" /></div>`
+      : `<div class="product-img-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width=".8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span>Product Image</span></div>`;
+    grid.innerHTML += `
+      <div class="product-card">
+        ${p.badge ? `<div class="${badgeClass}">${p.badge}</div>` : ''}
+        ${imgHtml}
+        <div class="product-info">
+          <div class="product-cat">${p.cat}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-price">${p.price ? '₹ '+p.price : '₹ —'}</div>
+          <div class="product-action">
+            <span class="action-link">View Details →</span>
+            <a href="https://wa.me/${waNum}?text=${waMsg}" class="action-wa" target="_blank">${WA_SVG}</a>
+          </div>
+        </div>
+      </div>`;
+  });
+  // Re-run scroll observer on new cards
+  observeCards();
+}
+
+// ─── RENDER REVIEWS ──────────────────────────────────────────────────────────
+function renderReviews(reviews) {
+  const grid = document.getElementById('reviewsGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  const stars = n => '★'.repeat(parseInt(n)||5) + '☆'.repeat(5-(parseInt(n)||5));
+  (reviews || []).forEach(r => {
+    grid.innerHTML += `
+      <div class="review-card">
+        <div class="review-quote">"</div>
+        <div class="review-stars">${stars(r.stars)}</div>
+        <p class="review-text">${r.text}</p>
+        <div class="review-footer">
+          <div class="review-avatar">${(r.name||'?')[0].toUpperCase()}</div>
+          <div><div class="reviewer-name">${r.name}</div><div class="reviewer-loc">${r.loc}</div></div>
+        </div>
+      </div>`;
+  });
+  observeCards();
+}
+
+// ─── RENDER THEMES ───────────────────────────────────────────────────────────
+function renderThemes(collections) {
+  const grid = document.getElementById('themesGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  (collections || []).forEach(c => {
+    grid.innerHTML += `
+      <div class="theme-card">
+        <div class="theme-emoji">${c.emoji||'✨'}</div>
+        <div class="theme-name">${c.name}</div>
+        <div class="theme-origin">${c.origin}</div>
+      </div>`;
+  });
+}
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el && val !== undefined && val !== null) el.textContent = val;
+}
+
+// ─── SCROLL OBSERVER ─────────────────────────────────────────────────────────
+function observeCards() {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.product-card, .review-card, .cat-card, .theme-card, .chatbot-step').forEach((el,i) => {
+    if (el.dataset.observed) return;
+    el.dataset.observed = '1';
     el.style.opacity='0'; el.style.transform='translateY(22px)';
-    el.style.transition=`opacity 0.55s ${i*0.06}s ease, transform 0.55s ${i*0.06}s ease`;
+    el.style.transition=`opacity .55s ${i*.06}s ease, transform .55s ${i*.06}s ease`;
     observer.observe(el);
   });
+}
+
+// ─── MAIN INIT ───────────────────────────────────────────────────────────────
+(function init() {
+  const data = loadData();
+  applyHero(data.hero);
+  applyStory(data.story);
+  applyContact(data.contact);
+  renderProducts(data.products);
+  renderReviews(data.reviews);
+  renderThemes(data.collections);
+  observeCards();
+})();
+
+// ─── NAV ─────────────────────────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+});
+let menuOpen = false;
+function toggleMenu() {
+  menuOpen = !menuOpen;
+  const links = document.querySelector('.nav-links');
+  if (menuOpen) {
+    Object.assign(links.style,{display:'flex',flexDirection:'column',gap:'0',position:'fixed',top:'76px',left:'0',right:'0',bottom:'0',background:'var(--cream)',padding:'2rem',borderTop:'1px solid var(--border-dk)',zIndex:'998'});
+    links.querySelectorAll('a').forEach(a => Object.assign(a.style,{padding:'1rem 0',fontSize:'1rem',borderBottom:'1px solid var(--border)'}));
+  } else {
+    links.removeAttribute('style');
+    links.querySelectorAll('a').forEach(a => a.removeAttribute('style'));
+  }
+}
 </script>
 </body>
 </html>
