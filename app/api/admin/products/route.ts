@@ -30,7 +30,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const supabase = await createAdminClient();
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("products")
     .insert({
       name: body.name,
@@ -44,11 +44,9 @@ export async function POST(req: NextRequest) {
       stock: body.stock ?? 0,
       is_active: body.is_active ?? true,
       badge: body.badge || null,
-    })
-    .select()
-    .single();
+    });
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json(data);
+  return NextResponse.json({ success: true });
 }
 
 export async function PUT(req: NextRequest) {
@@ -56,14 +54,12 @@ export async function PUT(req: NextRequest) {
   const { id, category, images, ...rest } = body;
   if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
   const supabase = await createAdminClient();
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("products")
     .update({ ...rest, images: images ?? [], updated_at: new Date().toISOString() })
-    .eq("id", id)
-    .select()
-    .single();
+    .eq("id", id);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json(data);
+  return NextResponse.json({ success: true });
 }
 
 export async function DELETE(req: NextRequest) {
