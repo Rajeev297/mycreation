@@ -149,6 +149,21 @@ export default function AdminPage() {
     else { const e = await res.json(); showToast("✗ " + e.error); }
   }
 
+  function imgFallback(e: React.SyntheticEvent<HTMLImageElement>) {
+    const img = e.currentTarget;
+    const parent = img.parentElement;
+    if (!parent || parent.dataset.fallback) return;
+    parent.dataset.fallback = "1";
+    img.style.display = "none";
+    const fb = document.createElement("span");
+    fb.textContent = "📷";
+    Object.assign(fb.style, {
+      display: "flex", alignItems: "center", justifyContent: "center",
+      width: "100%", height: "100%", fontSize: "1.5rem", opacity: "0.4",
+    });
+    parent.insertBefore(fb, img.nextSibling);
+  }
+
   async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -160,6 +175,9 @@ export default function AdminPage() {
       if (res.ok) {
         const { url } = await res.json();
         setEditingProduct(prev => prev ? { ...prev, images: [...(prev.images ?? []), url] } : prev);
+      } else {
+        const e = await res.json();
+        showToast("✗ Upload failed: " + (e.error || "Unknown error"));
       }
     }
     setUploading(false);
@@ -253,7 +271,7 @@ export default function AdminPage() {
                     {products.map((p) => (
                       <div key={p.id} style={{ display: "grid", gridTemplateColumns: "60px 1fr 1fr 100px 100px 90px", gap: "1rem", alignItems: "center", padding: "0.8rem 1rem", background: "var(--cream)", border: "1px solid var(--border)", borderLeft: "3px solid var(--burg)" }}>
                         <div style={{ width: 60, height: 60, background: "var(--warm)", border: "1px solid var(--border-dk)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", color: "var(--muted)", overflow: "hidden" }}>
-                          {p.images?.[0] ? <img src={p.images[0]} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : "📷"}
+                          {p.images?.[0] ? <img src={p.images[0]} onError={imgFallback} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : "📷"}
                         </div>
                         <div>
                           <div style={{ fontSize: "0.82rem", fontWeight: 500, color: "var(--dark)" }}>{p.name}</div>
@@ -345,7 +363,7 @@ export default function AdminPage() {
                         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
                           {(editingProduct.images ?? []).map((url, i) => (
                             <div key={i} style={{ position: "relative", width: 80, height: 80, border: "1px solid var(--border-dk)", overflow: "hidden", background: "var(--warm)" }}>
-                              <img src={url} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                              <img src={url} alt="" onError={imgFallback} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                               <button type="button" onClick={() => {
                                 const updated = [...(editingProduct.images ?? [])];
                                 updated.splice(i, 1);
