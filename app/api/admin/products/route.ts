@@ -53,12 +53,12 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   const body = await req.json();
-  const { id, ...fields } = body;
+  const { id, category, images, ...rest } = body;
   if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
   const supabase = await createAdminClient();
   const { data, error } = await supabase
     .from("products")
-    .update({ ...fields, updated_at: new Date().toISOString() })
+    .update({ ...rest, images: images ?? [], updated_at: new Date().toISOString() })
     .eq("id", id)
     .select()
     .single();
