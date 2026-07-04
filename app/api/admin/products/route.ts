@@ -4,11 +4,27 @@ import { createAdminClient } from "@/lib/admin-supabase";
 
 export async function GET() {
   const supabase = await createAdminClient();
-  const { data } = await supabase
+  const { data: products } = await supabase
     .from("products")
-    .select("*, category:categories(*)")
+    .select("*")
     .order("created_at", { ascending: false });
-  return NextResponse.json(data ?? []);
+
+  if (!products) return NextResponse.json([]);
+
+  const categoryIds = [...new Set(products.map(p => p.category_id).filter(Boolean))];
+  if (categoryIds.length > 0) {
+    const { data: categories } = await supabase
+      .from("categories")
+      .select("*")
+      .in("id", categoryIds);
+    const categoryMap = new Map(categories?.map(c => [c.id, c]) ?? []);
+    return NextResponse.json(products.map(p => ({
+      ...p,
+      category: p.category_id ? (categoryMap.get(p.category_id) ?? null) : null,
+    })));
+  }
+
+  return NextResponse.json(products.map(p => ({ ...p, category: null })));
 }
 
 export async function POST(req: NextRequest) {

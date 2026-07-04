@@ -3,11 +3,30 @@ import { createAdminClient } from "@/lib/admin-supabase";
 
 export async function GET() {
   const supabase = await createAdminClient();
-  const { data } = await supabase
+  const { data: orders } = await supabase
     .from("orders")
-    .select("*, items:order_items(*)")
+    .select("*")
     .order("created_at", { ascending: false });
-  return NextResponse.json(data ?? []);
+
+  if (!orders) return NextResponse.json([]);
+
+  const orderIds = orders.map(o => o.id);
+  const { data: items } = await supabase
+    .from("order_items")
+    .select("*")
+    .in("order_id", orderIds);
+
+  const itemsByOrder = new Map<string, typeof items>();
+  for (const item of items ?? []) {
+    const list = itemsByOrder.get(item.order_id) ?? [];
+    list.push(item);
+    itemsByOrder.set(item.order_id, list);
+  }
+
+  return NextResponse.json(orders.map(o => ({
+    ...o,
+    items: itemsByOrder.get(o.id) ?? [],
+  })));
 }
 
 export async function PUT(req: NextRequest) {

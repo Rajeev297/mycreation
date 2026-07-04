@@ -5,11 +5,27 @@ export async function GET(req: NextRequest) {
   const sessionId = req.nextUrl.searchParams.get("session_id");
   if (!sessionId) return NextResponse.json({ items: [] });
   const supabase = await createServerSupabase();
-  const { data } = await supabase
+  const { data: items } = await supabase
     .from("wishlist_items")
-    .select("id, product:products(*)")
+    .select("id, product_id")
     .eq("session_id", sessionId);
-  return NextResponse.json({ items: data ?? [] });
+
+  const result: { id: string; product: unknown }[] = [];
+  if (items) {
+    const productIds = [...new Set(items.map(i => i.product_id).filter(Boolean))];
+    let productMap = new Map<string, unknown>();
+    if (productIds.length > 0) {
+      const { data: products } = await supabase
+        .from("products")
+        .select("*")
+        .in("id", productIds);
+      productMap = new Map(products?.map(p => [p.id, p]) ?? []);
+    }
+    for (const item of items) {
+      result.push({ id: item.id, product: productMap.get(item.product_id) ?? null });
+    }
+  }
+  return NextResponse.json({ items: result });
 }
 
 export async function POST(req: NextRequest) {

@@ -7,11 +7,27 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ items: [] });
   }
   const supabase = await createServerSupabase();
-  const { data } = await supabase
+  const { data: items } = await supabase
     .from("cart_items")
-    .select("id, quantity, product:products(*)")
+    .select("id, quantity, product_id")
     .eq("session_id", sessionId);
-  return NextResponse.json({ items: data ?? [] });
+
+  const result: { id: string; quantity: number; product: unknown }[] = [];
+  if (items) {
+    const productIds = [...new Set(items.map(i => i.product_id).filter(Boolean))];
+    let productMap = new Map<string, unknown>();
+    if (productIds.length > 0) {
+      const { data: products } = await supabase
+        .from("products")
+        .select("*")
+        .in("id", productIds);
+      productMap = new Map(products?.map(p => [p.id, p]) ?? []);
+    }
+    for (const item of items) {
+      result.push({ id: item.id, quantity: item.quantity, product: productMap.get(item.product_id) ?? null });
+    }
+  }
+  return NextResponse.json({ items: result });
 }
 
 export async function POST(req: NextRequest) {

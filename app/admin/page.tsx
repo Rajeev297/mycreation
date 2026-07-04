@@ -39,6 +39,7 @@ export default function AdminPage() {
   const [editingCategory, setEditingCategory] = useState<Partial<Category> | null>(null);
   const [editingPromo, setEditingPromo] = useState<Partial<Promo> | null>(null);
   const [editingSettings, setEditingSettings] = useState<Record<string, string>>({});
+  const [uploading, setUploading] = useState(false);
 
   const showToast = useCallback((msg: string) => {
     setToast(msg);
@@ -148,6 +149,23 @@ export default function AdminPage() {
     else { const e = await res.json(); showToast("✗ " + e.error); }
   }
 
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    setUploading(true);
+    for (const file of Array.from(files)) {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+      if (res.ok) {
+        const { url } = await res.json();
+        setEditingProduct(prev => prev ? { ...prev, images: [...(prev.images ?? []), url] } : prev);
+      }
+    }
+    setUploading(false);
+    e.target.value = "";
+  }
+
   async function handleLogout() {
     const supabase = createClient();
     await supabase.auth.signOut();
@@ -227,7 +245,7 @@ export default function AdminPage() {
                   <span style={{ fontSize: "0.65rem", color: "var(--muted)" }}>{products.length} items</span>
                 </div>
                 <div style={{ padding: "1.5rem" }}>
-                  <button onClick={() => setEditingProduct({ name: "", slug: "", price: 0, stock: 0, is_active: true })}
+                  <button onClick={() => setEditingProduct({ name: "", slug: "", price: 0, stock: 0, is_active: true, images: [] })}
                     style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: "transparent", color: "var(--burg)", border: "1.5px dashed var(--burg)", padding: "0.6rem 1.2rem", fontSize: "0.75rem", fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", marginBottom: "1rem", justifyContent: "center", width: "100%" }}>
                     + Add Product
                   </button>
@@ -321,6 +339,25 @@ export default function AdminPage() {
                           <option value="Bestseller">Bestseller</option>
                           <option value="Sale">Sale</option>
                         </select>
+                      </div>
+                      <div>
+                        <label style={{ fontSize: "0.65rem", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--muted)", display: "block", marginBottom: "0.5rem" }}>Product Images</label>
+                        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                          {(editingProduct.images ?? []).map((url, i) => (
+                            <div key={i} style={{ position: "relative", width: 80, height: 80, border: "1px solid var(--border-dk)", overflow: "hidden", background: "var(--warm)" }}>
+                              <img src={url} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                              <button type="button" onClick={() => {
+                                const updated = [...(editingProduct.images ?? [])];
+                                updated.splice(i, 1);
+                                setEditingProduct({ ...editingProduct, images: updated });
+                              }} style={{ position: "absolute", top: 2, right: 2, width: 20, height: 20, border: "none", background: "rgba(0,0,0,0.6)", color: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.6rem", lineHeight: 1 }}>✕</button>
+                            </div>
+                          ))}
+                          <label style={{ width: 80, height: 80, border: "1px dashed var(--border-dk)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", cursor: uploading ? "not-allowed" : "pointer", background: "var(--cream)", fontSize: "0.6rem", color: "var(--muted)", opacity: uploading ? 0.5 : 1 }}>
+                            {uploading ? "..." : "+ Upload"}
+                            <input type="file" accept="image/*" multiple style={{ display: "none" }} onChange={handleImageUpload} disabled={uploading} />
+                          </label>
+                        </div>
                       </div>
                     </div>
                     <div style={{ display: "flex", gap: "0.8rem", marginTop: "1.5rem" }}>
